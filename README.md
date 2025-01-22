@@ -27,7 +27,7 @@ I chose this domain due to my passion for leveraging distributed architecture to
 ## Prototype System ##
 
 The envisioned system is a Distributed Healthcare Communication Platform designed to improve understanding, monitoring, and communication for patients and providers, as well as enabling secure communication between healthcare devices. Key features include:
- 1.Device Data Integration : The platform collects real-time data from a variety of healthcare devices, such as blood pressure monitors, glucose meters, and wearables, consolidating it into a distributed system for reliable access.
+1.	Device Data Integration: The platform collects real-time data from a variety of healthcare devices, such as blood pressure monitors, glucose meters, and wearables, consolidating it into a distributed system for reliable access.
 2.	Distributed Data Management: Leveraging distributed architecture, the system ensures data is synchronized and accessible across multiple locations and devices in real-time, providing redundancy and fault tolerance.
 3.	Device-to-Device Communication: Healthcare devices can securely communicate and exchange data directly through distributed networks, enabling interoperability and improving the quality of data insights.
 4.	Patient Dashboard: A user-friendly interface translates complex data into actionable insights through visualizations, alerts, and personalized recommendations.
@@ -36,4 +36,5 @@ The envisioned system is a Distributed Healthcare Communication Platform designe
 7.	Educational Resources: The platform includes customized content to educate patients about managing their conditions effectively.
 8.	Scalability and Resilience: The distributed architecture ensures the system can scale as more users and devices are added, maintaining high availability and performance.
 9.	Security: Advanced encryption and access control mechanisms protect patient data and device communications, ensuring compliance with healthcare regulations.
+
 
