@@ -56,4 +56,6 @@ The envisioned system is a Distributed Healthcare Communication Platform designe
 *	Primary: Patients and healthcare providers
 *	Secondary: Device manufacturers, healthcare organizations, and policymakers interested in improving chronic disease management.
 
+-------------------------------------------------------------------------------------------------------------
 
+This system would act as a bridge between technology and healthcare, addressing critical gaps in communication and understanding. By incorporating distributed architecture, the platform ensures robust, real-time data management and communication, ultimately leading to better chronic disease management outcomes.
