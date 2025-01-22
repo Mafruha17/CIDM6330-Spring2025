@@ -1,5 +1,12 @@
 # CIDM6330 70 #
-Wes Texas A&amp;M University course work | Assignment 1 | by Mafruha Chowdhury
+
+**West Texas A&amp;M University**
+
+    Semester: Spring 2025 
+    Course : CIDM6330/01/Software Engineering 
+    Student : Mafruha Chowdhury
+ 
+    Assignment 0: Domain Selection, the Unified Modeling Language, and an Introduction
 
  # Healthcare Device Communication #
 
