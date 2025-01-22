@@ -51,3 +51,9 @@ The envisioned system is a Distributed Healthcare Communication Platform designe
 
 * Showcase the advantages of distributed systems in healthcare communication and data management.
 
+
+### Stakeholders: ###
+*	Primary: Patients and healthcare providers
+*	Secondary: Device manufacturers, healthcare organizations, and policymakers interested in improving chronic disease management.
+
+
