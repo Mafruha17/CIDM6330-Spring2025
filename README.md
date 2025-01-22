@@ -39,3 +39,15 @@ The envisioned system is a Distributed Healthcare Communication Platform designe
 9.	**Security:** Advanced encryption and access control mechanisms protect patient data and device communications, ensuring compliance with healthcare regulations.
 
 
+### Goals: ###
+
+* Empower organizations, patients, and providers with actionable health data.
+
+* Leverage advanced technologies to adapt to inevitable future changes.
+
+* Enhance provider efficiency through automated data monitoring and trend analysis.
+
+* Improve health outcomes by supporting adherence to treatment plans.
+
+* Showcase the advantages of distributed systems in healthcare communication and data management.
+
