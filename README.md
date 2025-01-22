@@ -3,9 +3,9 @@ Wes Texas A&amp;M University course work
 
 Assignment 1
 
-## Healthcare Device Communication ##
+                                                                # Healthcare Device Communication #
 
-# Introduction #
+## Introduction ##
 
 Effective communication among patients, providers, and healthcare organizations is essential for quality care, particularly for managing chronic conditions. 
 Yet, interpreting data from devices like glucose meters, blood pressure monitors, or pacemakers remains challenging. This gap leads to poor treatment adherence and outcomes.
