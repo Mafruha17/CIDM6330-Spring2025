@@ -9,7 +9,7 @@ Effective communication among patients, providers, and healthcare organizations 
 Yet, interpreting data from devices like glucose meters, blood pressure monitors, or pacemakers remains challenging. This gap leads to poor treatment adherence and outcomes.
 A distributed software system can bridge this divide by enabling real-time insights, secure device communication, and better interactions between patients and providers.
 
-## Problem and Domain #
+## Problem and Domain ##
 
 
 Problem: Patients often struggle to understand and integrate data from healthcare devices into their daily routines.
