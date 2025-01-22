@@ -18,3 +18,7 @@ Devices frequently lack interoperability, creating silos that hinder seamless da
 
 Domain: This problem lies within healthcare communication and chronic disease management, focusing on distributed architecture for efficient communication and data management
 among patients, providers, organizations, and devices. Distributed systems enable real-time, secure data exchange, ensuring efficient information flow and fostering device interoperability. The domain spans patients using medical devices, providers managing their care, and the broader infrastructure supporting chronic disease management, creating a secure and cohesive ecosystem for healthcare data.
+
+## Personal/Professional Interest ##
+
+I chose this domain due to my passion for leveraging distributed architecture to solve real-world healthcare problems. My interest lies in creating scalable, reliable, and secure systems that improve patient-provider communication and enable device interoperability. Addressing these challenges aligns with my aspirations to develop innovative solutions in healthcare technology and distributed systems.
