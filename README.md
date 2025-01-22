@@ -10,16 +10,13 @@ Effective communication among patients, providers, and healthcare organizations 
 ## Problem and Domain ##
 
 
-Problem: Patients often struggle to understand and integrate data from healthcare devices into their daily routines.
-Providers face difficulties in consistently monitoring this data and offering timely guidance. 
-Devices frequently lack interoperability, creating silos that hinder seamless data sharing, while healthcare organizations encounter inefficiencies in process flow.
+Problem: Patients often struggle to understand and integrate data from healthcare devices into their daily routines. Providers face difficulties in consistently monitoring this data and offering timely guidance. Devices frequently lack interoperability, creating silos that hinder seamless data sharing, while healthcare organizations encounter inefficiencies in process flow. Additionally, these challenges often disrupt care coordination and limit proactive intervention opportunities.
 
-Domain: This problem lies within healthcare communication and chronic disease management, focusing on distributed architecture for efficient communication and data management
-among patients, providers, organizations, and devices. Distributed systems enable real-time, secure data exchange, ensuring efficient information flow and fostering device interoperability. The domain spans patients using medical devices, providers managing their care, and the broader infrastructure supporting chronic disease management, creating a secure and cohesive ecosystem for healthcare data.
+Domain: This problem lies within healthcare communication and chronic disease management, focusing on distributed architecture for efficient communication and data management among patients, providers, organizations, and devices. Distributed systems enable real-time, secure data exchange, ensuring efficient information flow and fostering device interoperability. For instance, a glucose monitor could automatically share data with a patient's healthcare team while syncing with other devices like fitness trackers, creating a comprehensive health profile. The domain spans patients using medical devices, providers managing their care, and the broader infrastructure supporting chronic disease management, fostering a secure and cohesive ecosystem for healthcare data.
 
 ## Personal/Professional Interest ##
 
-I chose this domain due to my passion for leveraging distributed architecture to solve real-world healthcare problems. My interest lies in creating scalable, reliable, and secure systems that improve patient-provider communication and enable device interoperability. Addressing these challenges aligns with my aspirations to develop innovative solutions in healthcare technology and distributed systems.
+I chose this domain due to my passion for leveraging distributed architecture to solve real-world healthcare problems. My interest lies in creating scalable, reliable, and secure systems that improve patient-provider communication and enable device interoperability. By addressing these challenges, I aim to enhance care delivery and optimize data flow, gaining expertise in both healthcare technology and distributed systems. This aligns with my aspirations to develop innovative and impactful solutions for the healthcare industry.
 
 
 ## Prototype System ##
