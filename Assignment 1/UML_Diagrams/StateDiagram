@@ -1,0 +1,11 @@
+digraph {
+	rankdir=TB
+	Idle [shape=ellipse]
+	Connected [shape=ellipse]
+	"Transmitting Data" [shape=ellipse]
+	Error [shape=ellipse]
+	Idle -> Connected [label="Pairing Successful"]
+	Connected -> "Transmitting Data" [label="Sends Health Data"]
+	"Transmitting Data" -> Idle [label="Data Sent"]
+	Connected -> Error [label=Failure]
+}

@@ -1,0 +1,13 @@
+digraph {
+	rankdir=TB
+	Patient [shape=ellipse]
+	Provider [shape=ellipse]
+	Admin [shape=ellipse]
+	Device [shape=ellipse]
+	System [shape=rectangle]
+	Patient -> Device [label="Connects & Sends Data"]
+	Device -> System [label="Sends Data To"]
+	System -> Provider [label="Provides Data To"]
+	Provider -> System [label="Monitors Patient Data"]
+	Admin -> System [label="Manages Users & Logs"]
+}

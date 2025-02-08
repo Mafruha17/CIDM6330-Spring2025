@@ -1,0 +1,11 @@
+digraph {
+	rankdir=TB
+	Patient [shape=rectangle]
+	Device [shape=rectangle]
+	System [shape=rectangle]
+	Provider [shape=rectangle]
+	Patient -> Device [label="Pair Device"]
+	Device -> System [label="Send Health Data"]
+	System -> Provider [label="Notify Provider"]
+	Provider -> System [label="Access Patient Data"]
+}
