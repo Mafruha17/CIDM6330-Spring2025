@@ -125,24 +125,27 @@ The **Distributed Healthcare Communication Platform** provides **seamless, secur
 - **Admin Interface**: System management, compliance monitoring, user management.  
 
 ### 2.4 Behaviors
-1. **Feature/Package A**: Device Data Integration *(UML Diagram to be attached)*  
-2. **Feature/Package B**: Two-Way Communication *(UML Diagram to be attached)*  
-3. **Feature/Package C**: Distributed Data Management *(UML Diagram to be attached)*  
+1. **Feature/Package A**: Device Data Integration 
+2. **Feature/Package B**: Two-Way Communication 
+3. **Feature/Package C**: Distributed Data Management 
 
 ## 3. UML Diagrams
 ### 3.1 Structural Diagrams
   - **Class Diagram**
-    - ![Component Diagram](./UML_Diagrams/)
+    - ![Class Diagram](./UML_Diagrams/Class%20Diagram.png)
   - **Component Diagram large**
     - ![Component Diagram](./UML_Diagrams/Component%20Diagram.png)
-  - **Component Diagram **
+  - **Component Diagram**
     - ![Component Diagram 2nd ](./UML_Diagrams/Component%20Diagram2nd.png)
   - **Deployment Diagram**
     - ![Deployment Diagram](./UML_Diagrams/Deployment%20Diagram.png)
+
   - **Package Diagram 1**
     - ![Package Diagram A](./UML_Diagrams/Feature_Package_A_Device_Data_Integration.png)
+
   - **Package Diagram 2**
      - ![Package Diagram B](./UML_Diagrams/Feature_Package_B_Two_Way_Communication.png)
+
    - **Package Diagram 3**
      - ![Package Diagram C](./UML_Diagrams/Feature_Package_C_Distributed_Data_Management.png)
 
