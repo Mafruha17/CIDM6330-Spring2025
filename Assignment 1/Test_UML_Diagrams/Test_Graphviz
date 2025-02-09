@@ -1,0 +1,5 @@
+digraph {
+	A [label="Test Node A"]
+	B [label="Test Node B"]
+	A -> B [label="Test Edge"]
+}
