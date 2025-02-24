@@ -1,6 +1,9 @@
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String
+from database.connection import Base
 
-class HealthcareProvider(BaseModel):
-    id: int
-    name: str
-    specialty: str
+class HealthcareProvider(Base):
+    __tablename__ = "healthcare_providers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    specialization = Column(String, nullable=True)

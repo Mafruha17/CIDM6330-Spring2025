@@ -1,31 +1,46 @@
+from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 from models.patient import Patient
-from database.connection import fake_db
+from schemas.patient import PatientSchema  # ✅ Ensure this is a Pydantic schema
 
-# Create a new patient
-def create_patient(patient: Patient):
-    if patient.id in fake_db["patients"]:
-        raise HTTPException(status_code=400, detail="Patient already exists")
-    fake_db["patients"][patient.id] = patient
-    return patient
+def create_patient(db: Session, patient_data: dict):
+    try:
+        new_patient = Patient(**patient_data)
+        db.add(new_patient)
+        db.commit()
+        db.refresh(new_patient)
+        return PatientSchema.model_validate(new_patient)  # ✅ Convert SQLAlchemy to Pydantic
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Patient with this email already exists.")
 
-# Retrieve a patient
-def get_patient(patient_id: int):
-    patient = fake_db["patients"].get(patient_id)
+def get_patient(db: Session, patient_id: int):
+    patient = db.query(Patient).filter(Patient.id == patient_id).first()
     if not patient:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    return patient
+        raise HTTPException(status_code=404, detail=f"Patient with ID {patient_id} not found.")
+    return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy to Pydantic
 
-# Update an existing patient
-def update_patient(patient_id: int, patient: Patient):
-    if patient_id not in fake_db["patients"]:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    fake_db["patients"][patient_id] = patient
-    return patient
+def update_patient(db: Session, patient_id: int, updated_data: dict):
+    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+    if not patient:
+        raise HTTPException(status_code=404, detail=f"Patient with ID {patient_id} not found.")
+    
+    try:
+        for key, value in updated_data.items():
+            setattr(patient, key, value)
+        db.commit()
+        db.refresh(patient)
+        return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy to Pydantic
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Error updating patient.")
 
-# Delete a patient
-def delete_patient(patient_id: int):
-    if patient_id not in fake_db["patients"]:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    del fake_db["patients"][patient_id]
-    return {"message": "Patient deleted successfully"}
+def delete_patient(db: Session, patient_id: int):
+    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+    if not patient:
+        raise HTTPException(status_code=404, detail=f"Patient with ID {patient_id} not found.")
+    
+    db.delete(patient)
+    db.commit()
+    return {"message": f"Patient {patient_id} deleted successfully."}

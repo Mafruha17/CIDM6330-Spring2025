@@ -1,70 +1,29 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Dict
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
 
-app = FastAPI()
+DATABASE_URL = "postgresql://WT-mc-student-19425:berti2-peDtyn-duhboj@localhost/student_db"
+# ✅ Improved: Enable logging for debugging
+engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Database simulation
-fake_db: Dict[str, Dict] = {
-    "patients": {},
-    "healthcare_providers": {},
-    "devices": {},
-    "organizations": {},
-    "data_processing": {},
-    "authentication_service": {},
-    "database": {},
-    "device_manufacturer": {},
-    "healthcare_platform": {},
-    "device_frontend": {},
-}
+# ✅ Define Base class (for models)
+class Base(DeclarativeBase):
+    pass
 
-# Pydantic Models
-class Patient(BaseModel):
-    id: int
-    name: str
-    device_connected: bool
+# ✅ Function to create tables when needed
+def create_tables():
+    print("Creating tables...")  # ✅ Log message
+    Base.metadata.create_all(bind=engine)
 
-class HealthcareProvider(BaseModel):
-    id: int
-    name: str
-    specialty: str
+# ✅ Dependency to get a database session in FastAPI
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db  # ✅ Provide DB session
+    finally:
+        db.close()  # ✅ Ensure it's closed
 
-class Device(BaseModel):
-    id: int
-    type: str
-    status: str
-
-# CRUD Endpoints for Patients
-@app.post("/patients/", response_model=Patient)
-def create_patient(patient: Patient):
-    if patient.id in fake_db["patients"]:
-        raise HTTPException(status_code=400, detail="Patient already exists")
-    fake_db["patients"][patient.id] = patient.dict()
-    return patient
-
-@app.get("/patients/{patient_id}", response_model=Patient)
-def get_patient(patient_id: int):
-    patient = fake_db["patients"].get(patient_id)
-    if not patient:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    return patient
-
-@app.put("/patients/{patient_id}", response_model=Patient)
-def update_patient(patient_id: int, patient: Patient):
-    if patient_id not in fake_db["patients"]:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    fake_db["patients"][patient_id] = patient.dict()
-    return patient
-
-@app.delete("/patients/{patient_id}")
-def delete_patient(patient_id: int):
-    if patient_id not in fake_db["patients"]:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    del fake_db["patients"][patient_id]
-    return {"message": "Patient deleted successfully"}
-
-# Similar CRUD operations can be implemented for other entities
-
+# ✅ Only create tables when explicitly run
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    create_tables()
+
