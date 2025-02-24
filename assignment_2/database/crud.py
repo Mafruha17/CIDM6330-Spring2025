@@ -10,7 +10,7 @@ def create_patient(db: Session, patient_data: dict):
         db.add(new_patient)
         db.commit()
         db.refresh(new_patient)
-        return PatientSchema.model_validate(new_patient)  # ✅ Convert SQLAlchemy to Pydantic
+        return PatientSchema.model_validate(new_patient)  # ✅ Convert SQLAlchemy → Pydantic
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=400, detail="Patient with this email already exists.")
@@ -19,7 +19,7 @@ def get_patient(db: Session, patient_id: int):
     patient = db.query(Patient).filter(Patient.id == patient_id).first()
     if not patient:
         raise HTTPException(status_code=404, detail=f"Patient with ID {patient_id} not found.")
-    return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy to Pydantic
+    return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy → Pydantic
 
 def update_patient(db: Session, patient_id: int, updated_data: dict):
     patient = db.query(Patient).filter(Patient.id == patient_id).first()
@@ -31,7 +31,7 @@ def update_patient(db: Session, patient_id: int, updated_data: dict):
             setattr(patient, key, value)
         db.commit()
         db.refresh(patient)
-        return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy to Pydantic
+        return PatientSchema.model_validate(patient)  # ✅ Convert SQLAlchemy → Pydantic
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=400, detail="Error updating patient.")
