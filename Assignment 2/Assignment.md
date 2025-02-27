@@ -229,3 +229,5 @@ python database/create_db.py
 
 ## Conclusion
 Through this exercise, I have significantly enhanced my understanding of Python, particularly in developing RESTful APIs using FastAPI. I gained hands-on experience in database management with SQLite, implementing CRUD operations, optimizing queries for efficiency, and ensuring data integrity through proper entity relationships. Additionally, working with SQLAlchemy, Pydantic models, and API validation improved my ability to design scalable and maintainable applications. Overall, this project has been a valuable learning experience, reinforcing best practices in backend development and API design.
+```
+
