@@ -1,8 +1,8 @@
 
 **West Texas A&M University**  
 **Semester:** Spring 2025  
-**Course:** CIDM6330/01/Software Engineering  
-**Student:** Mafruha Chowdhury
+**Course:** CIDM6330/01 Software Engineering  
+**Student:** Mafruha Chowdhury  
 
 ---
 
@@ -25,7 +25,7 @@ This project provides a RESTful API using FastAPI to manage healthcare-related e
 - [Enhancing Database Relationships, Incorporating All Entities, and Optimizing Queries for Efficiency](#enhancing-database-relationships-incorporating-all-entities-and-optimizing-queries-for-efficiency)
 - [Steps I Follow to Optimize | Minimize ERD](#steps-i-follow-to-optimize--minimize-erd)
 - [Introducing Object-Oriented Concepts in ERD Design](#introducing-object-oriented-concepts-in-erd-design)
-- [Handling a Recursive Relationship](#what-if-i-encounter-a-recursive-relationship)
+- [What If I Encounter a Recursive Relationship?](#what-if-i-encounter-a-recursive-relationship)
 - [Handling Validation Errors](#handling-validation-errors)
 - [CRUD Implementation](#crud-implementation)
 - [Notes](#notes)
@@ -92,7 +92,7 @@ uvicorn main:app --reload
 
 ## Environment Configuration
 
-The project uses a `.env` file to manage environment variables. Ensure you create a `.env` file in the project root with the following content (or update it as needed):
+The project uses a `.env` file to manage environment variables. Ensure to create a `.env` file in the project root with the following content (or update it as needed):
 
 ```env
 # .env file
@@ -104,33 +104,33 @@ DATABASE_URL=sqlite:///./database.db
 ---
 
 ## Project Folder Structure
+
 ```plaintext
 project-root/
 │
 │-- database/
-│   ├-- crud/
-│   │   ├-- device_crud.py      # CRUD functions for Devices
-│   │   ├-- patient_crud.py     # CRUD functions for Patients
-│   │   └-- provider_crud.py    # CRUD functions for Providers
-│   │
-│   ├-- connection.py           # Database connection settings
-│   ├-- create_db.py            # Script to initialize database
-│   ├-- models.py               # ORM models for tables
-│   └-- database.db             # SQLite database file
+│   ├── crud/
+│   │    ├── device_crud.py      # CRUD functions for Devices
+│   │    ├── patient_crud.py     # CRUD functions for Patients
+│   │    └── provider_crud.py    # CRUD functions for Providers
+│   ├── connection.py           # Database connection settings
+│   ├── create_db.py            # Script to initialize database
+│   ├── models.py               # ORM models for tables
+│   └── database.db             # SQLite database file
 │
 │-- routers/
-│   ├-- device_routes.py        # API routes for Device CRUD
-│   ├-- patient_routes.py       # API routes for Patient CRUD
-│   └-- provider_routes.py      # API routes for Provider CRUD
+│   ├── device_routes.py        # API routes for Device CRUD
+│   ├── patient_routes.py       # API routes for Patient CRUD
+│   └── provider_routes.py      # API routes for Provider CRUD
 │
 │-- schemas/
-│   ├-- device.py               # Pydantic schemas for Devices
-│   ├-- patient.py              # Pydantic schemas for Patients
-│   └-- provider.py             # Pydantic schemas for Providers
+│   ├── device.py               # Pydantic schemas for Devices
+│   ├── patient.py              # Pydantic schemas for Patients
+│   └── provider.py             # Pydantic schemas for Providers
 │
-├-- main.py                     # FastAPI main entry file
-├-- requirements.txt            # Python dependencies
-└-- Assignment2.md              # Project Documentation
+├── main.py                     # FastAPI main entry file
+├── requirements.txt            # Python dependencies
+└── Assignment2.md              # Project Documentation
 ```
 
 ---
@@ -230,13 +230,13 @@ These enhancements will improve **scalability, efficiency, and maintainability**
 
 ## Introducing Object-Oriented Concepts in ERD Design
 
-Depending on the domain and requirements, you could consider a **hybrid approach** that models **inheritance** or **composition** directly in the ERD. For example, a “User” entity could be a parent, while “Patient” or “Provider” might be specialized sub-entities.
+Depending on the domain and requirements, I could consider a **hybrid approach** that models **inheritance** or **composition** directly in the ERD. For example, a “User” entity could be a parent, while “Patient” or “Provider” might be specialized sub-entities.
 
 ---
 
 ## What If I Encounter a Recursive Relationship?
 
-Sometimes an entity can relate to itself (e.g., a manager supervising an employee). Use a self-referencing foreign key and clearly document the recursion in your ERD.
+Sometimes an entity can relate to itself (e.g., a manager supervising an employee). Use a self-referencing foreign key and clearly document the recursion in ERD.
 
 ---
 
@@ -262,13 +262,13 @@ Our implementation leverages SQLAlchemy for data persistence and relationship ma
 
 ## Notes
 
-- If you encounter a database error or need a fresh start:
+- If I encounter a database error or need a fresh start:
 
   ```bash
   rm database/database.db
   python database/create_db.py
   ```
-- Always activate your virtual environment before installing dependencies or running the server.
+- Always activate virtual environment before installing dependencies or running the server.
 
 ---
 
@@ -298,7 +298,7 @@ This project reinforces best practices in API design, data modeling, and applica
 
 ## Code Implementation
 
-Below are the key code snippets for this project. Update or replace these blocks with your final implementations as needed.
+Below are the key code snippets for this project.
 
 ---
 
@@ -450,7 +450,7 @@ def verify_tables():
         if tables:
             print(f"✅ Existing tables: {[table[0] for table in tables]}")
         else:
-            print("⚠️ No tables found. Make sure your models are properly defined.")
+            print("⚠️ No tables found. Make sure models are properly defined.")
     except sqlite3.Error as e:
         print(f"❌ SQLite error: {e}")
 
@@ -973,8 +973,16 @@ def get_patients(provider_id: int, db: Session = Depends(get_db)):
 
 ---
 
-**End of Document**
+## Summary
 
-This updated Markdown document now includes all sections—including the conclusion at the end—and a collapsible, clickable Table of Contents. It covers all aspects from installation to enhancements, with a clear summary in the Conclusion.
+This document provides a comprehensive overview of the Assignment 02 project. It includes:
 
-Feel free to review and adjust any details as needed.
+- Detailed installation and environment setup instructions.
+- A clear project folder structure reflecting that the CRUD functions are within the `database` directory.
+- An explanation of API endpoints for Patients, Devices, and Providers.
+- Sections on enhancing database relationships, query optimizations, and ERD design considerations.
+- Instructions on handling validation errors and best practices for CRUD operations.
+- A conclusion summarizing the project achievements.
+- Complete code implementation sections covering connection, models, database initialization, schemas, CRUD operations, and routers.
+
+---
