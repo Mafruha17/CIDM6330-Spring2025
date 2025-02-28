@@ -2,13 +2,48 @@
 **West Texas A&M University**  
 **Semester:** Spring 2025  
 **Course:** CIDM6330/01 Software Engineering  
-**Student:** Mafruha Chowdhury  
+**Student:** Nobolayra and Aiden
 
 ---
-
 # Assignment 02: From Specification to API
 
 This project provides a RESTful API using FastAPI to manage healthcare-related entities, including Patients, Devices, and Providers. It enables users to perform CRUD operations efficiently while ensuring data integrity through proper entity relationships and validation.
+---
+
+- Developing an Applications Programming Interface (API) using FastAPI
+- Creating an entity model to validate the API
+- Preparing an Entity Relationship Diagram (ERD) for a persistence strategy using SQLite and SQLAlchemy
+
+### Entity Selection for this project
+
+Based on the original ERD diagram, for this assignment selected the **Patient**, **Device**, and **Provider** entities to demonstrate the assignment requirements. These entities showcase the relationships and interactions between a patient, their associated medical devices, and healthcare providers.
+
+---
+### ERD
+
+An **Entity Relationship Diagram (ERD)** visually represents how entities (tables) are related within your database. Each entity corresponds to a real-world concept or object, and relationships show how data in one entity can connect to data in another.
+
+**An Enhanced ERD** extends the basic diagram to include more complex modeling features, such as:
+- **Subtypes/Supertypes**: Inheritance-like structures.
+- **Constraints**: Primary, foreign, and unique keys.
+- **Cardinality & Optionality**: Indicates whether relationships are mandatory or optional.
+
+**Assignment Project’s ERD**
+The ERD defines the structure of database, depicting the relationships between different entities. The selected entities for this project are:
+
+- **Patient**: Represents individuals receiving healthcare services
+- **Device**: Represents medical devices assigned to patients
+- **Provider**: Represents healthcare providers managing patients
+
+The ERD diagram has been saved as a **PDF** and included in the submission repository.
+
+**[Patient | Device | Provider]**
+
+- **Assignment-specific ERD Diagram**  
+  ![Assignment specific ERD Diagram](./edr/edr.PNG)
+
+- **Selected from Previous ERD/Class Diagram**  
+  ![Selected from Previous ERD/Class Diagram](./edr/Class%20Diagram.png)
 
 ---
 
@@ -16,7 +51,6 @@ This project provides a RESTful API using FastAPI to manage healthcare-related e
   <summary><strong>Table of Contents</strong></summary>
 
 - [Installation & Setup](#installation--setup)
-- [Environment Configuration](#environment-configuration)
 - [Project Folder Structure](#project-folder-structure)
 - [API Endpoints](#api-endpoints)
   - [Patient Routes](#patient-routes)
@@ -36,73 +70,20 @@ This project provides a RESTful API using FastAPI to manage healthcare-related e
 
 ---
 
-## Installation & Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository_url>
-cd <repository_name>
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### 3. Activate Virtual Environment
-
-<details>
-<summary>Windows (PowerShell)</summary>
-
-```bash
-.\venv\Scripts\Activate
-```
-</details>
-
-<details>
-<summary>macOS/Linux</summary>
-
-```bash
-source venv/bin/activate
-```
-</details>
-
-### 4. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Setup Database
-
-```bash
-rm database/database.db  # Remove old DB if it exists
-python database/create_db.py  # Create new DB
-```
-
-### 6. Run the API Server
-
-```bash
-uvicorn main:app --reload
-```
-
+### Installation & Setup
 ---
 
-## Environment Configuration
-
-The project uses a `.env` file to manage environment variables. Ensure to create a `.env` file in the project root with the following content (or update it as needed):
-
-```env
-# .env file
-
-# Database connection URL (defaults to SQLite if not set)
-DATABASE_URL=sqlite:///./database.db
-```
-
+| **Step** | **Description** | **Command(s) / Configuration** |
+|---------|----------------|--------------------------------|
+| 1 | Clone the Repository | ```git clone <repository_url>``` <br> ```cd <repository_name>``` |
+| 2 | Create a Virtual Environment | ```python -m venv venv``` |
+| 3 | Activate Virtual Environment (Windows) | ```.\venv\Scripts\Activate``` |
+| 4 | Activate Virtual Environment (macOS/Linux) | ```source venv/bin/activate``` |
+| 5 | Install Dependencies | ```pip install -r requirements.txt``` |
+| 6 | Setup Database | ```rm database/database.db``` <br> *(Remove old DB if it exists)* <br> ```python database/create_db.py``` <br> *(Create new DB)* |
+|7 | Configure Environment Variables | Create a `.env` file in the project root with the following content: <br> <br> ```DATABASE_URL=sqlite:///./database.db``` |
+| 8 | Run the API Server | ```uvicorn main:app --reload``` |
 ---
-
 ## Project Folder Structure
 
 ```plaintext
@@ -134,58 +115,36 @@ project-root/
 ```
 
 ---
+# API Endpoints
+<small>
+<small>
 
-## API Endpoints
+| **Entity**  | **Method** | **Endpoint**              | **Description**             |
+|------------|-----------|--------------------------|-----------------------------|
+| **Patient** | **POST**   | `/patients/`             | Create a new patient        |
+|            | **GET**    | `/patients/{patient_id}`  | Retrieve patient details    |
+|            | **PUT**    | `/patients/{patient_id}`  | Update patient details      |
+|            | **DELETE** | `/patients/{patient_id}`  | Delete a patient           |
+| **Device**  | **POST**   | `/devices/`              | Create a new device         |
+|            | **GET**    | `/devices/{device_id}`    | Retrieve device details     |
+|            | **PUT**    | `/devices/{device_id}`    | Update device details       |
+|            | **DELETE** | `/devices/{device_id}`    | Delete a device            |
+| **Provider**| **POST**   | `/providers/`            | Create a new provider       |
+|            | **GET**    | `/providers/{provider_id}`| Retrieve provider details   |
+|            | **PUT**    | `/providers/{provider_id}`| Update provider details     |
+|            | **DELETE** | `/providers/{provider_id}`| Delete a provider          |
 
-### Patient Routes
-
-- **POST** `/patients/`  
-  Create a new patient
-
-- **GET** `/patients/{patient_id}`  
-  Retrieve patient details
-
-- **PUT** `/patients/{patient_id}`  
-  Update patient details
-
-- **DELETE** `/patients/{patient_id}`  
-  Delete a patient
-
-### Device Routes
-
-- **POST** `/devices/`  
-  Create a new device
-
-- **GET** `/devices/{device_id}`  
-  Retrieve device details
-
-- **PUT** `/devices/{device_id}`  
-  Update device details
-
-- **DELETE** `/devices/{device_id}`  
-  Delete a device
-
-### Provider Routes
-
-- **POST** `/providers/`  
-  Create a new provider
-
-- **GET** `/providers/{provider_id}`  
-  Retrieve provider details
-
-- **PUT** `/providers/{provider_id}`  
-  Update provider details
-
-- **DELETE** `/providers/{provider_id}`  
-  Delete a provider
+</small>
+</small>
 
 ---
 
-## Enhancing Database Relationships, Incorporating All Entities, and Optimizing Queries for Efficiency
+### Enhancing Database Relationships
+Incorporating all entities ensures all relevant tables exist, but relationships improve only when structured properly. Query optimization enhances performance through indexing and caching but doesn’t inherently strengthen relationships.
+#### Current Implementation in This Assignment
+<small>
 
-### Current Implementation
-
-- **Entity Relationships**:  
+- **Entity Relationships**: 
   - Many-to-Many between Patients and Providers  
   - One-to-Many between Patients and Devices (cascade delete enabled)
 
@@ -211,11 +170,13 @@ project-root/
 - **Optimize Bulk Operations**:  
   - Use batch inserts & updates instead of individual transactions
 
-These enhancements will improve **scalability, efficiency, and maintainability** of our API. 🚀
+These enhancements are implemented to improve <small>**scalability, efficiency, and maintainability**</small> of our API, with further fine-tuning possible as needed.
+
+</small>
 
 ---
 
-## Steps I Follow to Optimize | Minimize ERD
+### Steps I Follow to Optimize | Minimize ERD
 
 1. **Normalization**  
    Look for duplicate fields or repeated data that could be separated out, ensuring each entity handles only its own unique attributes and associations.
@@ -228,26 +189,26 @@ These enhancements will improve **scalability, efficiency, and maintainability**
 
 ---
 
-## Introducing Object-Oriented Concepts in ERD Design
+### Introducing Object-Oriented Concepts in ERD Design
 
 Depending on the domain and requirements, I could consider a **hybrid approach** that models **inheritance** or **composition** directly in the ERD. For example, a “User” entity could be a parent, while “Patient” or “Provider” might be specialized sub-entities.
 
 ---
 
-## What If I Encounter a Recursive Relationship?
+### What If I Encounter a Recursive Relationship?
 
 Sometimes an entity can relate to itself (e.g., a manager supervising an employee). Use a self-referencing foreign key and clearly document the recursion in ERD.
 
 ---
 
-## Handling Validation Errors
+### Handling Validation Errors
 
 - A `422 Unprocessable Entity` error typically indicates request data does not match the expected Pydantic schema.  
 - Ensure all required fields are provided with correct data types.
 
 ---
 
-## CRUD Implementation
+### CRUD Implementation
 
 CRUD stands for **Create**, **Read**, **Update**, and **Delete**:
 
@@ -260,7 +221,7 @@ Our implementation leverages SQLAlchemy for data persistence and relationship ma
 
 ---
 
-## Notes
+### Notes
 
 - If I encounter a database error or need a fresh start:
 
@@ -272,7 +233,7 @@ Our implementation leverages SQLAlchemy for data persistence and relationship ma
 
 ---
 
-## Future Implementations Would Be Good to Have
+### Future Implementations Would Be Good to Have
 
 - **Authentication & Authorization** (e.g., JWT, OAuth2)  
 - **Asynchronous Processing** for higher concurrency  
@@ -296,7 +257,7 @@ This project reinforces best practices in API design, data modeling, and applica
 
 ---
 
-## Code Implementation
+### Code Implementation
 
 Below are the key code snippets for this project.
 
