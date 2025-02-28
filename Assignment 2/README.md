@@ -5,18 +5,20 @@
 **Student:** Nobolayra and Aiden
 
 ---
-# Assignment 02: From Specification to API
+## Assignment 02: From Specification to API
 
 This project provides a RESTful API using FastAPI to manage healthcare-related entities, including Patients, Devices, and Providers. It enables users to perform CRUD operations efficiently while ensuring data integrity through proper entity relationships and validation.
+
+
 ---
 
-- Developing an Applications Programming Interface (API) using FastAPI
+- Developing an Application Programming Interface (API) using FastAPI
 - Creating an entity model to validate the API
 - Preparing an Entity Relationship Diagram (ERD) for a persistence strategy using SQLite and SQLAlchemy
 
 ### Entity Selection for this project
 
-Based on the original ERD diagram, for this assignment selected the **Patient**, **Device**, and **Provider** entities to demonstrate the assignment requirements. These entities showcase the relationships and interactions between a patient, their associated medical devices, and healthcare providers.
+Based on the original ERD diagram, this assignment selects the **Patient**, **Device**, and **Provider** entities to demonstrate the assignment requirements. These entities showcase the relationships and interactions between a patient, their associated medical devices, and healthcare providers.
 
 ---
 ### ERD
@@ -29,7 +31,7 @@ An **Entity Relationship Diagram (ERD)** visually represents how entities (table
 - **Cardinality & Optionality**: Indicates whether relationships are mandatory or optional.
 
 **Assignment Project’s ERD**
-The ERD defines the structure of database, depicting the relationships between different entities. The selected entities for this project are:
+The ERD defines the structure of the database, depicting the relationships between different entities. The selected entities for this project are:
 
 - **Patient**: Represents individuals receiving healthcare services
 - **Device**: Represents medical devices assigned to patients
@@ -39,7 +41,7 @@ The ERD diagram has been saved as a **PDF** and included in the submission repos
 
 **[Patient | Device | Provider]**
 
-- **Assignment-specific ERD Diagram**  
+- **Assignment-Specific ERD Diagram**  
   ![Assignment specific ERD Diagram](./edr/edr.PNG)
 
 - **Selected from Previous ERD/Class Diagram**  
@@ -50,14 +52,19 @@ The ERD diagram has been saved as a **PDF** and included in the submission repos
 <details>
   <summary><strong>Table of Contents</strong></summary>
 
+- [Assignment 02: From Specification to API](#assignment-02-from-specification-to-api)
+- [Entity Selection for this Project](#entity-selection-for-this-project)
+- [ERD](#erd)
 - [Installation & Setup](#installation--setup)
 - [Project Folder Structure](#project-folder-structure)
 - [API Endpoints](#api-endpoints)
   - [Patient Routes](#patient-routes)
   - [Device Routes](#device-routes)
   - [Provider Routes](#provider-routes)
-- [Enhancing Database Relationships, Incorporating All Entities, and Optimizing Queries for Efficiency](#enhancing-database-relationships-incorporating-all-entities-and-optimizing-queries-for-efficiency)
-- [Steps I Follow to Optimize | Minimize ERD](#steps-i-follow-to-optimize--minimize-erd)
+- [Enhancing Database Relationships](#enhancing-database-relationships)
+  - [Current Implementation in This Assignment](#current-implementation-in-this-assignment)
+  - [Enhancements and Optimizations](#enhancements-and-optimizations)
+- [Steps to Optimize and Minimize ERD](#steps-to-optimize-and-minimize-erd)
 - [Introducing Object-Oriented Concepts in ERD Design](#introducing-object-oriented-concepts-in-erd-design)
 - [What If I Encounter a Recursive Relationship?](#what-if-i-encounter-a-recursive-relationship)
 - [Handling Validation Errors](#handling-validation-errors)
@@ -66,6 +73,21 @@ The ERD diagram has been saved as a **PDF** and included in the submission repos
 - [Future Implementations Would Be Good to Have](#future-implementations-would-be-good-to-have)
 - [Conclusion](#conclusion)
 - [Code Implementation](#code-implementation)
+  - [1. `database/connection.py`](#1-databaseconnectionpy)
+  - [2. `database/models.py`](#2-databasemodelspy)
+  - [3. `database/create_db.py`](#3-databasecreate_dbpy)
+  - [4. `main.py`](#4-mainpy)
+  - [5. `schemas/device.py`](#5-schemasdevicepy)
+  - [6. `schemas/patient.py`](#6-schemaspatientpy)
+  - [7. `schemas/provider.py`](#7-schemasproviderpy)
+  - [8. `crud/device_crud.py`](#8-cruddevice_crudpy)
+  - [9. `crud/patient_crud.py`](#9-crudpatient_crudpy)
+  - [10. `crud/provider_crud.py`](#10-crudprovider_crudpy)
+  - [11. `routers/device_routes.py`](#11-routersdevice_routespy)
+  - [12. `routers/patient_routes.py`](#12-routerspatient_routespy)
+  - [13. `routers/provider_routes.py`](#13-routersprovider_routespy)
+  - [Summary](#summary)
+
 </details>
 
 ---
@@ -176,7 +198,7 @@ These enhancements are implemented to improve <small>**scalability, efficiency, 
 
 ---
 
-### Steps I Follow to Optimize | Minimize ERD
+### Steps to Optimize and Minimize ERD
 
 1. **Normalization**  
    Look for duplicate fields or repeated data that could be separated out, ensuring each entity handles only its own unique attributes and associations.
@@ -233,7 +255,7 @@ Our implementation leverages SQLAlchemy for data persistence and relationship ma
 
 ---
 
-### Future Implementations Would Be Good to Have
+### Future Enhancements and Potential Features
 
 - **Authentication & Authorization** (e.g., JWT, OAuth2)  
 - **Asynchronous Processing** for higher concurrency  
