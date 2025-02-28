@@ -2,7 +2,7 @@
 **West Texas A&M University**  
 **Semester:** Spring 2025  
 **Course:** CIDM6330/01 Software Engineering  
-**Student:** Nobolayra and Aiden
+**Student:** Mafruha Chowdhury
 
 ---
 ## Assignment 02: From Specification to API
