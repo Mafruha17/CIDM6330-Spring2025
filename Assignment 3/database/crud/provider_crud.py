@@ -1,5 +1,5 @@
-from sqlmodel import Session
-from database.models import Provider
+from sqlmodel import Session,select
+from database.models import Provider, Patient
 from schemas.provider import ProviderSchema
 from repositories.provider_repository import ProviderRepository
 from typing import Optional, List
@@ -18,3 +18,8 @@ def update_provider(db: Session, provider_id: int, provider_data: ProviderSchema
 
 def delete_provider(db: Session, provider_id: int) -> bool:
     return ProviderRepository(db).delete(provider_id)
+
+def get_patients_by_provider(db: Session, provider_id: int):
+    statement = select(Patient).where(Patient.provider_id == provider_id)
+    results = db.exec(statement)
+    return results.all()

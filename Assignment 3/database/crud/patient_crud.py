@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlmodel import Session
+from sqlmodel import Session,select
 from database.models import Patient, Device, Provider
 from schemas.patient import PatientSchema
 from repositories.patient_repository import PatientRepository
@@ -32,3 +32,33 @@ def delete_patient(db: Session, patient_id: int):
     db.delete(patient)
     db.commit()
     return {"message": "Patient deleted successfully"}
+
+def assign_provider_to_patient(db: Session, patient_id: int, provider_id: int):
+    statement = select(Patient).where(Patient.id == patient_id)
+    patient = db.exec(statement).first()
+
+    statement = select(Provider).where(Provider.id == provider_id)
+    provider = db.exec(statement).first()
+    
+    if not patient or not provider:
+        return None
+    
+    if provider in patient.providers:
+        return patient  # Already assigned
+
+    patient.providers.append(provider)
+    db.commit()
+    return patient
+def remove_provider_from_patient(db: Session, patient_id: int, provider_id: int):
+    patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
+    provider = db.exec(select(Provider).where(Provider.id == provider_id)).first()
+
+    if not patient or not provider:
+        return None  # Either patient or provider does not exist
+
+    if provider in patient.providers:
+        patient.providers.remove(provider)
+        db.commit()
+    
+    return patient
+
