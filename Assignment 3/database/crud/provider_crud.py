@@ -1,16 +1,8 @@
-from fastapi import HTTPException
-from sqlmodel import Session, select
-from typing import Optional, List
-
-from database.models import Patient, Device, Provider
-from schemas.patient import PatientSchema
-from schemas.device import DeviceSchema
+from sqlmodel import Session
+from database.models import Provider
 from schemas.provider import ProviderSchema
-
-from repositories.patient_repository import PatientRepository
-from repositories.device_repository import DeviceRepository
 from repositories.provider_repository import ProviderRepository
-
+from typing import Optional, List
 
 def create_provider(db: Session, provider_data: ProviderSchema) -> Provider:
     return ProviderRepository(db).create(provider_data.model_dump())
@@ -26,9 +18,3 @@ def update_provider(db: Session, provider_id: int, provider_data: ProviderSchema
 
 def delete_provider(db: Session, provider_id: int) -> bool:
     return ProviderRepository(db).delete(provider_id)
-
-def get_patients_by_provider(db: Session, provider_id: int):
-    statement = select(Patient).where(Patient.provider_id == provider_id)
-    results = db.exec(statement)
-    return results.all()
-
