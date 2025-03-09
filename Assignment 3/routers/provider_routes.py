@@ -1,0 +1,37 @@
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import Session
+from database.connection import get_db
+from database.crud.crud import (
+    create_provider, get_provider, update_provider, delete_provider
+)
+from schemas.provider import ProviderSchema
+
+router = APIRouter(prefix="/providers", tags=["Providers"])
+
+# ✅ Create a new Provider
+@router.post("/", response_model=ProviderSchema, summary="Create Provider")
+def create_provider_route(provider: ProviderSchema, db: Session = Depends(get_db)):
+    return create_provider(db, provider)
+
+# ✅ Get a Provider by ID
+@router.get("/{provider_id}", response_model=ProviderSchema, summary="Get Provider")
+def get_provider_route(provider_id: int, db: Session = Depends(get_db)):
+    provider = get_provider(db, provider_id)
+    if not provider:
+        raise HTTPException(status_code=404, detail="Provider not found")
+    return provider
+
+# ✅ Update a Provider
+@router.put("/{provider_id}", response_model=ProviderSchema)
+def update_provider_route(provider_id: int, provider_data: ProviderSchema, db: Session = Depends(get_db)):
+    updated_provider = update_provider(db, provider_id, provider_data)
+    if not updated_provider:
+        raise HTTPException(status_code=404, detail="Provider not found")
+    return updated_provider
+
+# ✅ Delete a Provider
+@router.delete("/{provider_id}", summary="Delete Provider")
+def delete_provider_route(provider_id: int, db: Session = Depends(get_db)):
+    if not delete_provider(db, provider_id):
+        raise HTTPException(status_code=404, detail="Provider not found")
+    return {"message": "Provider deleted successfully"}
