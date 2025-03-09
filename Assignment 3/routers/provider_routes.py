@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from database.connection import get_db
-from database.crud.crud import (
-    create_provider, get_provider, update_provider, delete_provider
+from database.crud.provider_crud import (
+    create_provider, get_provider, update_provider, delete_provider, get_patients_by_provider
 )
 from schemas.provider import ProviderSchema
 
@@ -22,7 +22,7 @@ def get_provider_route(provider_id: int, db: Session = Depends(get_db)):
     return provider
 
 # ✅ Update a Provider
-@router.put("/{provider_id}", response_model=ProviderSchema)
+@router.put("/{provider_id}", response_model=ProviderSchema, summary="Update Provider")
 def update_provider_route(provider_id: int, provider_data: ProviderSchema, db: Session = Depends(get_db)):
     updated_provider = update_provider(db, provider_id, provider_data)
     if not updated_provider:
@@ -35,3 +35,11 @@ def delete_provider_route(provider_id: int, db: Session = Depends(get_db)):
     if not delete_provider(db, provider_id):
         raise HTTPException(status_code=404, detail="Provider not found")
     return {"message": "Provider deleted successfully"}
+
+# ✅ Get Patients by Provider (List all patients assigned to a specific provider)
+@router.get("/{provider_id}/patients", summary="Get Patients by Provider")
+def get_patients_by_provider_route(provider_id: int, db: Session = Depends(get_db)):
+    patients = get_patients_by_provider(db, provider_id)
+    if not patients:
+        raise HTTPException(status_code=404, detail="No patients found for this provider")
+    return patients
