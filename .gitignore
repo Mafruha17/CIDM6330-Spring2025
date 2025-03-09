@@ -1,0 +1,25 @@
+assignment_2/main.py
+assignment_2/requirements.txt
+assignment_2/__pycache__/main.cpython-313.pyc
+assignment_2/database/connection.py
+assignment_2/database/crud.py
+assignment_2/database/__pycache__/connection.cpython-313.pyc
+assignment_2/database/__pycache__/crud.cpython-313.pyc
+assignment_2/doc/ERD_Diagram.puml
+assignment_2/doc/PostgreSQL Configuration.docx
+assignment_2/doc/README.md
+assignment_2/models/device.py
+assignment_2/models/healthcare_provider.py
+assignment_2/models/patient.py
+assignment_2/models/__pycache__/__init__.cpython-313.pyc
+assignment_2/models/__pycache__/device.cpython-313.pyc
+assignment_2/models/__pycache__/healthcare_provider.cpython-313.pyc
+assignment_2/models/__pycache__/patient.cpython-313.pyc
+assignment_2/routes/device_routes.py
+assignment_2/routes/healthcare_provider_routes.py
+assignment_2/routes/patient_routes.py
+assignment_2/routes/__pycache__/device_routes.cpython-313.pyc
+assignment_2/routes/__pycache__/healthcare_provider_routes.cpython-313.pyc
+assignment_2/routes/__pycache__/patient_routes.cpython-313.pyc
+assignment_2/schemas/patient.py
+assignment_2/schemas/__pycache__/patient.cpython-313.pyc
