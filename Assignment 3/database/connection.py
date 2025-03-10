@@ -7,19 +7,22 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ✅ Use environment variable for DATABASE_URL (default to SQLite)
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///database/database.db")
 
-# ✅ Create Engine
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {})
+# ✅ Create Engine with correct connection args
+engine = create_engine(
+    DATABASE_URL, 
+    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+)
 
-# ✅ Create Session
+# ✅ Create Session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# ✅ Use DeclarativeBase (SQLAlchemy 2.0)
+# ✅ Use DeclarativeBase for SQLAlchemy 2.0+
 class Base(DeclarativeBase):
     pass
 
-# ✅ Dependency for FastAPI: Ensures correct session management
+# ✅ Dependency for FastAPI: Ensures proper session management
 def get_db():
     db = SessionLocal()
     try:

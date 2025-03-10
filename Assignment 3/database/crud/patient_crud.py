@@ -1,6 +1,6 @@
 from fastapi import HTTPException
-from sqlmodel import Session,select
-from database.models import Patient, Device, Provider
+from sqlmodel import Session, select
+from database.models import Patient, Provider
 from schemas.patient import PatientSchema
 from repositories.patient_repository import PatientRepository
 from typing import Optional, List
@@ -12,7 +12,7 @@ def get_patient(db: Session, patient_id: int) -> Optional[Patient]:
     return PatientRepository(db).get(patient_id)
 
 def update_patient(db: Session, patient_id: int, patient_data: PatientSchema):
-    patient = db.get(Patient, patient_id)
+    patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
     if not patient:
         return None
 
@@ -25,7 +25,7 @@ def update_patient(db: Session, patient_id: int, patient_data: PatientSchema):
     return patient
 
 def delete_patient(db: Session, patient_id: int):
-    patient = db.get(Patient, patient_id)
+    patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
 
@@ -34,11 +34,8 @@ def delete_patient(db: Session, patient_id: int):
     return {"message": "Patient deleted successfully"}
 
 def assign_provider_to_patient(db: Session, patient_id: int, provider_id: int):
-    statement = select(Patient).where(Patient.id == patient_id)
-    patient = db.exec(statement).first()
-
-    statement = select(Provider).where(Provider.id == provider_id)
-    provider = db.exec(statement).first()
+    patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
+    provider = db.exec(select(Provider).where(Provider.id == provider_id)).first()
     
     if not patient or not provider:
         return None
@@ -49,6 +46,7 @@ def assign_provider_to_patient(db: Session, patient_id: int, provider_id: int):
     patient.providers.append(provider)
     db.commit()
     return patient
+
 def remove_provider_from_patient(db: Session, patient_id: int, provider_id: int):
     patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
     provider = db.exec(select(Provider).where(Provider.id == provider_id)).first()

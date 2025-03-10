@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import List, Optional
 
 class PatientSchema(BaseModel):
@@ -13,7 +13,6 @@ class ProviderSchema(BaseModel):
     name: str
     email: EmailStr
     specialty: Optional[str] = None
-    patients: List[PatientSchema] = []  # ✅ Fix: Many-to-Many relationship
+    patients: List[PatientSchema] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

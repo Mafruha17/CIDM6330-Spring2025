@@ -10,12 +10,13 @@ TEST_CSV_FILE = "test_providers.csv"
 def csv_repo():
     repo = CSVRepository(TEST_CSV_FILE)
     yield repo
-    os.remove(TEST_CSV_FILE)  # Cleanup after tests
+    if os.path.exists(TEST_CSV_FILE):  # ✅ Fix: Check if file exists before removing
+        os.remove(TEST_CSV_FILE)
 
 # ✅ Test Creating a Provider
 def test_create_provider(csv_repo):
     provider_data = ProviderSchema(name="Dr. John Doe", email="john@example.com", specialization="Cardiology")
-    created_provider = csv_repo.create(provider_data)
+    created_provider = csv_repo.create(provider_data.model_dump())  # ✅ Fixed model_dump()
     assert created_provider["id"] is not None
     assert created_provider["name"] == "Dr. John Doe"
 

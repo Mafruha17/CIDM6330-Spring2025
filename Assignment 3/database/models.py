@@ -1,63 +1,41 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
-from sqlalchemy.orm import relationship
-from database.connection import Base  # Keeping original import
+from sqlmodel import SQLModel, Field, Relationship
+from typing import List, Optional
+#from database.connection import Base  # Keeping original import
 
 # ✅ Many-to-Many Relationship: Patient ↔ Provider
-patient_provider_association = Table(
-    "patient_provider_association",
-    Base.metadata,
-    Column("patient_id", Integer, ForeignKey("patients.id", ondelete="CASCADE"), primary_key=True),
-    Column("provider_id", Integer, ForeignKey("providers.id", ondelete="CASCADE"), primary_key=True),
-)
+class PatientProviderLink(SQLModel, table=True):
+    patient_id: int = Field(foreign_key="patient.id", primary_key=True)
+    provider_id: int = Field(foreign_key="provider.id", primary_key=True)
 
 # ✅ Provider Model
-class Provider(Base):
-    __tablename__ = "providers"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    specialty = Column(String, nullable=False)
+class Provider(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    email: str = Field(unique=True)
+    specialty: str
 
     # Many-to-Many with Patients
-    patients = relationship("Patient", secondary=patient_provider_association, back_populates="providers")
+    patients: List["Patient"] = Relationship(back_populates="providers", link_model=PatientProviderLink)
 
 # ✅ Patient Model 
-class Patient(Base):
-    __tablename__ = "patients"
+class Patient(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    email: str = Field(unique=True)
+    age: int
+    active: bool = Field(default=True)
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    age = Column(Integer, nullable=False)
-    active = Column(Boolean, default=True)
+    # ✅ Many-to-Many with Providers
+    providers: List["Provider"] = Relationship(back_populates="patients", link_model=PatientProviderLink)
 
-    # ✅ Many-to-Many with Providers (Explicitly Remove on Delete)
-    providers = relationship(
-        "Provider",
-        secondary=patient_provider_association,
-        back_populates="patients",
-        cascade="all, delete",  # Ensures associated records are removed
-        passive_deletes=True    # Helps with foreign key constraints
-    )
-
-    # ✅ One-to-Many with Devices (Ensure Correct back_populates)
-    devices = relationship(
-        "Device",
-        back_populates="patient",
-        cascade="all, delete",
-        passive_deletes=True
-    )
+    # ✅ One-to-Many with Devices
+    devices: List["Device"] = Relationship(back_populates="patient")
 
 # ✅ Device Model (One-to-Many with Patients)
-class Device(Base):
-    __tablename__ = "devices"
-
-    id = Column(Integer, primary_key=True, index=True)
-    serial_number = Column(String, nullable=False, unique=True)
-    active = Column(Boolean, default=True)
-
-    # ✅ Foreign Key to Patient
-    patient_id = Column(Integer, ForeignKey("patients.id", ondelete="CASCADE"), nullable=False)
+class Device(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    serial_number: str = Field(unique=True)
+    active: bool = Field(default=True)
     
-    patient = relationship("Patient", back_populates="devices")
+    patient_id: int = Field(foreign_key="patient.id")
+    patient: Optional["Patient"] = Relationship(back_populates="devices")

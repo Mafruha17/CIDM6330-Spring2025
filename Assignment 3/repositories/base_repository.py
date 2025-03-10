@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic, List, Optional
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 T = TypeVar("T")
 S = TypeVar("S")
@@ -14,25 +14,25 @@ class BaseRepository(ABC, Generic[T, S]):
 
     @abstractmethod
     def create(self, data: S) -> T:
-        """Create a new record."""
         pass
 
-    @abstractmethod
     def get(self, item_id: int) -> Optional[T]:
-        """Get a record by ID."""
-        pass
+        statement = select(self.model).where(self.model.id == item_id)
+        return self.db.exec(statement).first()
 
-    @abstractmethod
     def get_all(self) -> List[T]:
-        """Get all records."""
-        pass
+        statement = select(self.model)
+        return self.db.exec(statement).all()
 
     @abstractmethod
     def update(self, item_id: int, data: S) -> Optional[T]:
-        """Update a record."""
         pass
 
-    @abstractmethod
     def delete(self, item_id: int) -> bool:
-        """Delete a record."""
-        pass
+        statement = select(self.model).where(self.model.id == item_id)
+        obj = self.db.exec(statement).first()
+        if obj:
+            self.db.delete(obj)
+            self.db.commit()
+            return True
+        return False

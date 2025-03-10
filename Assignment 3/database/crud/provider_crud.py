@@ -1,4 +1,4 @@
-from sqlmodel import Session,select
+from sqlmodel import Session, select
 from database.models import Provider, Patient
 from schemas.provider import ProviderSchema
 from repositories.provider_repository import ProviderRepository
@@ -20,6 +20,10 @@ def delete_provider(db: Session, provider_id: int) -> bool:
     return ProviderRepository(db).delete(provider_id)
 
 def get_patients_by_provider(db: Session, provider_id: int):
-    statement = select(Patient).where(Patient.provider_id == provider_id)
+    statement = (
+        select(Patient)
+        .join(Patient.providers)
+        .where(Provider.id == provider_id)
+    )
     results = db.exec(statement)
     return results.all()

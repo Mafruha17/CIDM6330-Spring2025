@@ -21,7 +21,7 @@ def provider_repo(db_session):
 # ✅ Test Creating a Provider
 def test_create_provider(provider_repo):
     provider_data = ProviderSchema(name="Dr. John Doe", email="john@example.com", specialization="Cardiology")
-    created_provider = provider_repo.create(provider_data)
+    created_provider = provider_repo.create(provider_data.model_dump())  # ✅ Fixed model_dump()
     assert created_provider.id is not None
     assert created_provider.name == "Dr. John Doe"
 

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import List, Optional
 
 class DeviceSchema(BaseModel):
@@ -18,8 +18,7 @@ class PatientSchema(BaseModel):
     email: EmailStr
     age: int
     active: bool = True
-    devices: List[DeviceSchema] = []  # ✅ Fix: List of Device objects
-    providers: List[ProviderSchema] = []  # ✅ Fix: Many-to-Many relationship
+    devices: List[DeviceSchema] = [] 
+    providers: List[ProviderSchema] = []
 
-    class Config:
-        from_attributes = True  # ✅ Helps SQLAlchemy models map to Pydantic
+    model_config = ConfigDict(from_attributes=True)
