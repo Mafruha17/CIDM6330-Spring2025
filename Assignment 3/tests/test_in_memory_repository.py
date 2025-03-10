@@ -3,6 +3,8 @@ from fastapi.testclient import TestClient
 from main import app
 from repositories.in_memory_repository import InMemoryRepository
 from schemas.provider import ProviderSchema
+from database.crud.device_crud import DeviceCRUD
+
 
 # ✅ Set up test client
 client = TestClient(app)

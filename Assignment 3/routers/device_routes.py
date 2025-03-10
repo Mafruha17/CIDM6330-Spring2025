@@ -59,3 +59,4 @@ def remove_device_from_patient_route(patient_id: int, device_id: int, db: Sessio
     if not updated_patient:
         raise HTTPException(status_code=404, detail="Either patient or device not found")
     return updated_patient
+

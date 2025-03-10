@@ -4,8 +4,7 @@ from typing import List, Dict, Optional
 from repositories.base_repository import BaseRepository
 
 class CSVRepository(BaseRepository):
-    """Implements repository using CSV storage."""
-
+  
     def __init__(self, file_path: str):
         self.file_path = file_path
         self.fieldnames = ["id", "name", "email"]
@@ -39,3 +38,18 @@ class CSVRepository(BaseRepository):
 
     def get_all(self):
         return self._read_csv()
+    
+    def update(self, item_id: int, data) -> Optional[dict]:
+        """Update an item in the CSV file based on item_id."""
+        items = self._read_csv()
+        
+        for item in items:
+            if int(item["id"]) == item_id:
+                for key, value in data.model_dump().items():
+                    if key in item:  # Ensure we only update existing fields
+                        item[key] = value
+                self._write_csv(items)
+                return item  # Return the updated item
+        return None  # Return None if item not found
+
+   

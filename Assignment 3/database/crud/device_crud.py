@@ -47,3 +47,27 @@ def assign_device_to_patient(db: Session, patient_id: int, device_id: int):
     db.refresh(patient)
     
     return patient
+def remove_device_from_patient(db: Session, patient_id: int, device_id: int):
+    """Remove a device from a patient (One-to-Many relationship)."""
+    
+    # Retrieve patient
+    patient_statement = select(Patient).where(Patient.id == patient_id)
+    patient = db.exec(patient_statement).first()
+
+    # Retrieve device
+    device_statement = select(Device).where(Device.id == device_id)
+    device = db.exec(device_statement).first()
+
+    if not patient or not device:
+        return None  # Either patient or device does not exist
+
+    if device not in patient.devices:
+        return patient  # Device is not assigned to the patient
+
+    # Remove the device from the patient
+    patient.devices.remove(device)
+    db.commit()
+    db.refresh(patient)
+    
+    return patient
+

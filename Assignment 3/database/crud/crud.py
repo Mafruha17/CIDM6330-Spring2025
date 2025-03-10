@@ -13,8 +13,8 @@ from database.crud.patient_crud import (
     assign_provider_to_patient, remove_provider_from_patient
 )
 from database.crud.device_crud import (
-    create_device, get_device, update_device, delete_device, assign_device_to_patient
+    create_device, get_device, update_device, delete_device, assign_device_to_patient, 
 )
 from database.crud.provider_crud import (
-    create_provider, get_provider, update_provider, delete_provider, get_patients_by_provider
+    create_provider, get_provider, update_provider, delete_provider, get_patients_by_provider,remove_device_from_patient
 )

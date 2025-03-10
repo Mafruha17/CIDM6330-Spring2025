@@ -11,6 +11,9 @@ def create_patient(db: Session, patient_data: PatientSchema) -> Patient:
 def get_patient(db: Session, patient_id: int) -> Optional[Patient]:
     return PatientRepository(db).get(patient_id)
 
+def get_all_patients(db: Session) -> List[Patient]:
+    return PatientRepository(db).get_all()
+
 def update_patient(db: Session, patient_id: int, patient_data: PatientSchema):
     patient = db.exec(select(Patient).where(Patient.id == patient_id)).first()
     if not patient:
