@@ -5,47 +5,43 @@ from repositories.base_repository import BaseRepository
 from typing import Optional, List
 
 class PatientRepository(BaseRepository[Patient, PatientSchema]):
-    """
-    Implements repository for Patient entity using SQLModel / Session.
-    """
-
     def __init__(self, db: Session):
         super().__init__(db, Patient)
 
     def create(self, obj_in: PatientSchema) -> Patient:
-        obj = Patient(**obj_in.model_dump())
-        self.db.add(obj)
+        patient = Patient(**obj_in.dict())
+        self.db.add(patient)
         self.db.commit()
-        self.db.refresh(obj)
-        return obj
+        self.db.refresh(patient)
+        return patient
 
-    def get(self, item_id: int) -> Optional[Patient]:
-        statement = select(Patient).where(Patient.id == item_id)
+    def get(self, patient_id: int) -> Optional[Patient]:
+        statement = select(Patient).where(Patient.id == patient_id)
         return self.db.exec(statement).first()
 
     def get_all(self) -> List[Patient]:
         statement = select(Patient)
         return self.db.exec(statement).all()
 
-    def update(self, item_id: int, obj_in: PatientSchema) -> Optional[Patient]:
-        statement = select(Patient).where(Patient.id == item_id)
-        obj = self.db.exec(statement).first()
-        if not obj:
+    def update(self, patient_id: int, patient_data: PatientSchema) -> Optional[Patient]:
+        patient = self.get(patient_id)
+        if not patient:
             return None
-
-        update_data = obj_in.model_dump(exclude_unset=True)
+        update_data = patient_data.dict(exclude_unset=True)
         for key, value in update_data.items():
-            setattr(obj, key, value)
-
+            setattr(patient, key, value)
         self.db.commit()
-        self.db.refresh(obj)
-        return obj
+        self.db.refresh(patient)
+        return patient
 
-    def delete(self, item_id: int) -> bool:
-        statement = select(Patient).where(Patient.id == item_id)
-        obj = self.db.exec(statement).first()
-        if obj:
-            self.db.delete(obj)
+    def delete(self, patient_id: int) -> bool:
+        patient = self.get(patient_id)
+        if patient:
+            self.db.delete(patient)
             self.db.commit()
             return True
         return False
+
+    def get(self, patient_id: int) -> Optional[Patient]:
+        return self.db.exec(select(Patient).where(Patient.id == patient_id)).first()
+

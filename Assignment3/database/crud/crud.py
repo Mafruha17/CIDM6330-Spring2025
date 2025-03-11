@@ -24,5 +24,4 @@ from database.crud.provider_crud import (
     get_patients_by_provider
 )
 
-# NOTE: This file references your CRUD and Repositories. 
-#       If you have additional bridging logic, you can add it here.
+
