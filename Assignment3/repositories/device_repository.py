@@ -1,34 +1,33 @@
 from sqlmodel import Session, select
-from database.models import Device
 from schemas.device import DeviceSchema
 from repositories.base_repository import BaseRepository
-from typing import Optional, List
+from typing import Optional, List, Type
 
-class DeviceRepository(BaseRepository[Device, DeviceSchema]):
-    """
-    Implements repository for the Device entity using SQLModel / SQLAlchemy.
-    """
+class DeviceRepository(BaseRepository[None, DeviceSchema]):  
+    device_model: Type = None  # Properly define class-level variable
 
     def __init__(self, db: Session):
+        from database.models import Device  # Import inside to avoid circular import
         super().__init__(db, Device)
+        DeviceRepository.device_model = Device  # Assign model to class variable
 
-    def create(self, obj_in: DeviceSchema) -> Device:
-        obj = Device(**obj_in.model_dump())
+    def create(self, obj_in: DeviceSchema) -> Optional[Type]:  
+        obj = self.device_model(**obj_in.model_dump())  # Use class variable
         self.db.add(obj)
         self.db.commit()
         self.db.refresh(obj)
         return obj
 
-    def get(self, item_id: int) -> Optional[Device]:
-        statement = select(Device).where(Device.id == item_id)
+    def get(self, item_id: int) -> Optional[Type]:  
+        statement = select(self.device_model).where(self.device_model.id == item_id)
         return self.db.exec(statement).first()
 
-    def get_all(self) -> List[Device]:
-        statement = select(Device)
+    def get_all(self) -> List[Type]:  
+        statement = select(self.device_model)
         return self.db.exec(statement).all()
 
-    def update(self, item_id: int, obj_in: DeviceSchema) -> Optional[Device]:
-        statement = select(Device).where(Device.id == item_id)
+    def update(self, item_id: int, obj_in: DeviceSchema) -> Optional[Type]:  
+        statement = select(self.device_model).where(self.device_model.id == item_id)
         obj = self.db.exec(statement).first()
         if not obj:
             return None
@@ -38,6 +37,5 @@ class DeviceRepository(BaseRepository[Device, DeviceSchema]):
         self.db.commit()
         self.db.refresh(obj)
         return obj
-
-    # delete() inherited from BaseRepository should work fine for this
-
+    
+    

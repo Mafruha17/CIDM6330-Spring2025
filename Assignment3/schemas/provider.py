@@ -2,23 +2,17 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import List, Optional
 
 class PatientSchema(BaseModel):
-    """
-    A simplified Patient schema used for nesting inside ProviderSchema.
-    """
-    id: int
+    id: Optional[int] = None  # Make id optional
     name: str
     email: EmailStr
     age: int
     active: bool = True
 
 class ProviderSchema(BaseModel):
-    """
-    Represents a Provider with embedded list of Patients.
-    """
-    id: int
+    id: Optional[int] = None  # Make id optional
     name: str
-    email: EmailStr
+    email: Optional[EmailStr] = None  # Ensure this doesn't break cases where email is missing
     specialty: Optional[str] = None
-    patients: List[PatientSchema] = []
+    patients: Optional[List[PatientSchema]] = None  # Allow it to be null when not needed
 
     model_config = ConfigDict(from_attributes=True)

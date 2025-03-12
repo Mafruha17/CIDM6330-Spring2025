@@ -6,7 +6,7 @@ class DeviceSchema(BaseModel):
     A Pydantic schema for Devices, with `from_attributes=True`
     so we can directly return SQLModel objects in FastAPI responses.
     """
-    id: int
+    id: Optional[int]  # Make id optional
     serial_number: str
     patient_id: Optional[int] = None
     active: bool = True

@@ -1,6 +1,5 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlmodel import Session, create_engine
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,11 +11,8 @@ engine = create_engine(
     connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 )
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    """Dependency to provide a SQLModel session"""
+    with Session(engine) as session:
+        print(f"DEBUG: get_db() is yielding {type(session)}")  # 🛠 Debugging line
+        yield session

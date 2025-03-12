@@ -17,7 +17,6 @@ class InMemoryRepository(BaseRepository):
         """
         Expects obj_in to be a dictionary or an object with .model_dump().
         """
-        # Attempt to handle either a dictionary or a Pydantic/SQLModel object
         if hasattr(obj_in, "model_dump"):
             item_dict = obj_in.model_dump()
         else:
@@ -32,9 +31,12 @@ class InMemoryRepository(BaseRepository):
         return self.data.get(item_id)
 
     def get_all(self) -> List[dict]:
-        return list(self.data.values())
+        return list(self.data.values()) if self.data else []  # Ensure empty list instead of None
 
     def update(self, item_id: int, obj_in) -> Optional[dict]:
+        """
+        Updates an existing item while keeping required fields intact.
+        """
         if item_id not in self.data:
             return None
 
@@ -44,8 +46,11 @@ class InMemoryRepository(BaseRepository):
             update_dict = dict(obj_in)
 
         existing_item = self.data[item_id]
+
         for key, value in update_dict.items():
-            existing_item[key] = value
+            if value is not None:  # Prevent removing required fields
+                existing_item[key] = value
+
         self.data[item_id] = existing_item
         return existing_item
 

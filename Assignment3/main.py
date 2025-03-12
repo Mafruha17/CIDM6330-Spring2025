@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from database.connection import get_db
 from routers import patient_routes, device_routes, provider_routes
+#from app import app
+
 
 app = FastAPI(
     title="Healthcare API",

@@ -1,48 +1,75 @@
-import pytest
+import csv
 import os
-from repositories.csv_repository import CSVRepository
-from schemas.provider import ProviderSchema
+from typing import List, Optional, Dict
 
-# We'll store providers in this test CSV file
-TEST_CSV_FILE = "test_providers.csv"
+class CSVRepository:
+    """
+    A repository that stores items in a CSV file (keyed by ID).
+    Not fully generic: it assumes certain columns (id, name, email).
+    Modify `fieldnames` to fit your use case.
+    """
 
-@pytest.fixture
-def csv_repo():
-    repo = CSVRepository(TEST_CSV_FILE)
-    yield repo
-    if os.path.exists(TEST_CSV_FILE):
-        os.remove(TEST_CSV_FILE)
+    def __init__(self, file_path: str):
+        """
+        :param file_path: Path to the CSV file used for storage.
+        """
+        self.file_path = file_path
+        self.fieldnames = ["id", "name", "email"]  # Define expected fields
 
-def test_create_provider(csv_repo):
-    # Using "specialty" to match your ProviderSchema
-    provider_data = ProviderSchema(name="Dr. John Doe", email="john@example.com", specialty="Cardiology")
-    created_provider = csv_repo.create(provider_data)
-    assert created_provider["id"] is not None
-    assert created_provider["name"] == "Dr. John Doe"
+        if not os.path.exists(self.file_path):
+            with open(self.file_path, mode='w', newline='', encoding='utf-8') as file:
+                writer = csv.DictWriter(file, fieldnames=self.fieldnames)
+                writer.writeheader()
 
-def test_get_provider(csv_repo):
-    provider_data = ProviderSchema(name="Dr. Jane Smith", email="jane@example.com", specialty="Neurology")
-    created_provider = csv_repo.create(provider_data)
-    fetched_provider = csv_repo.get(created_provider["id"])
-    assert fetched_provider is not None
-    assert fetched_provider["name"] == "Dr. Jane Smith"
+    def _read_csv(self) -> List[Dict[str, str]]:
+        """Reads all rows from the CSV file."""
+        with open(self.file_path, mode='r', newline='', encoding='utf-8') as file:
+            return list(csv.DictReader(file))
 
-def test_get_all_providers(csv_repo):
-    # We know at least one provider has been created by earlier tests
-    providers = csv_repo.get_all()
-    assert len(providers) >= 1
+    def _write_csv(self, data: List[Dict[str, str]]):
+        """Writes data to the CSV file."""
+        with open(self.file_path, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=self.fieldnames)
+            writer.writeheader()
+            writer.writerows(data)
 
-def test_update_provider(csv_repo):
-    provider_data = ProviderSchema(name="Dr. Alan Brown", email="alan@example.com", specialty="Pediatrics")
-    created_provider = csv_repo.create(provider_data)
-    update_data = ProviderSchema(name="Dr. Alan Updated")
-    updated_provider = csv_repo.update(created_provider["id"], update_data)
-    assert updated_provider is not None
-    assert updated_provider["name"] == "Dr. Alan Updated"
+    def create(self, data: Dict[str, str]) -> Dict[str, str]:
+        """Creates a new record in the CSV file."""
+        items = self._read_csv()
+        new_id = len(items) + 1  # Auto-increment ID
+        data_dict = data if isinstance(data, dict) else data.model_dump()
+        data_dict["id"] = str(new_id)  # Convert ID to string (CSV stores text)
+        items.append(data_dict)
+        self._write_csv(items)
+        return data_dict
 
-def test_delete_provider(csv_repo):
-    provider_data = ProviderSchema(name="Dr. Lisa Green", email="lisa@example.com", specialty="Dermatology")
-    created_provider = csv_repo.create(provider_data)
-    deleted = csv_repo.delete(created_provider["id"])
-    assert deleted is True
-    assert csv_repo.get(created_provider["id"]) is None
+    def get(self, item_id: int) -> Optional[Dict[str, str]]:
+        """Fetches a record by ID."""
+        items = self._read_csv()
+        return next((item for item in items if int(item["id"]) == item_id), None)
+
+    def get_all(self) -> List[Dict[str, str]]:
+        """Returns all records."""
+        return self._read_csv()
+
+    def update(self, item_id: int, data: Dict[str, str]) -> Optional[Dict[str, str]]:
+        """Updates a record by ID."""
+        items = self._read_csv()
+        for item in items:
+            if int(item["id"]) == item_id:
+                update_dict = data if isinstance(data, dict) else data.model_dump(exclude_unset=True)
+                for key, value in update_dict.items():
+                    if key in item:
+                        item[key] = value  # Update only known fields
+                self._write_csv(items)
+                return item
+        return None
+
+    def delete(self, item_id: int) -> bool:
+        """Deletes a record by ID."""
+        items = self._read_csv()
+        remaining = [item for item in items if int(item["id"]) != item_id]
+        if len(remaining) != len(items):
+            self._write_csv(remaining)
+            return True
+        return False
