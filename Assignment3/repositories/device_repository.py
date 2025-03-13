@@ -12,7 +12,8 @@ class DeviceRepository(BaseRepository[None, DeviceSchema]):
         DeviceRepository.device_model = Device  # Assign model to class variable
 
     def create(self, obj_in: DeviceSchema) -> Optional[Type]:  
-        obj = self.device_model(**obj_in.model_dump())  # Use class variable
+        obj_data = obj_in.dict(exclude_unset=True)  # ✅ FIX: Use `.dict()`
+        obj = self.device_model(**obj_data)
         self.db.add(obj)
         self.db.commit()
         self.db.refresh(obj)
@@ -31,11 +32,9 @@ class DeviceRepository(BaseRepository[None, DeviceSchema]):
         obj = self.db.exec(statement).first()
         if not obj:
             return None
-        update_data = obj_in.model_dump(exclude_unset=True)
+        update_data = obj_in.dict(exclude_unset=True)  # ✅ Use `.dict()`
         for key, value in update_data.items():
             setattr(obj, key, value)
         self.db.commit()
         self.db.refresh(obj)
         return obj
-    
-    

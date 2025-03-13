@@ -15,10 +15,10 @@ class InMemoryRepository(BaseRepository):
 
     def create(self, obj_in) -> dict:
         """
-        Expects obj_in to be a dictionary or an object with .model_dump().
+        Expects obj_in to be a dictionary or an object with .dict().
         """
-        if hasattr(obj_in, "model_dump"):
-            item_dict = obj_in.model_dump()
+        if hasattr(obj_in, "dict"):
+            item_dict = obj_in.dict()
         else:
             item_dict = dict(obj_in)
 
@@ -40,8 +40,8 @@ class InMemoryRepository(BaseRepository):
         if item_id not in self.data:
             return None
 
-        if hasattr(obj_in, "model_dump"):
-            update_dict = obj_in.model_dump(exclude_unset=True)
+        if hasattr(obj_in, "dict"):
+            update_dict = obj_in.dict(exclude_unset=True)
         else:
             update_dict = dict(obj_in)
 

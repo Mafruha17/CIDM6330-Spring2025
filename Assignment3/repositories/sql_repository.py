@@ -14,7 +14,7 @@ class SQLRepository(BaseRepository):
         self.model = model
 
     def create(self, data):
-        obj = self.model(**data.model_dump())
+        obj = self.model(**data.dict())
         self.db.add(obj)
         self.db.commit()
         self.db.refresh(obj)
@@ -33,7 +33,7 @@ class SQLRepository(BaseRepository):
         obj = self.db.exec(statement).first()
         if not obj:
             return None
-        update_data = data.model_dump(exclude_unset=True)
+        update_data = data.dict(exclude_unset=True)
         for key, value in update_data.items():
             setattr(obj, key, value)
         self.db.commit()

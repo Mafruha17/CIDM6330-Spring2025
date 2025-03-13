@@ -37,7 +37,7 @@ class CSVRepository:
         """Creates a new record in the CSV file."""
         items = self._read_csv()
         new_id = len(items) + 1  # Auto-increment ID
-        data_dict = data if isinstance(data, dict) else data.model_dump()
+        data_dict = data if isinstance(data, dict) else data.dict()
         data_dict["id"] = str(new_id)  # Convert ID to string (CSV stores text)
         items.append(data_dict)
         self._write_csv(items)
@@ -57,7 +57,7 @@ class CSVRepository:
         items = self._read_csv()
         for item in items:
             if int(item["id"]) == item_id:
-                update_dict = data if isinstance(data, dict) else data.model_dump(exclude_unset=True)
+                update_dict = data if isinstance(data, dict) else data.dict(exclude_unset=True)
                 for key, value in update_dict.items():
                     if key in item:
                         item[key] = value  # Update only known fields

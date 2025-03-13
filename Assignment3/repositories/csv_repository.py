@@ -38,8 +38,8 @@ class CSVRepository(BaseRepository):
     def create(self, data):
         items = self._read_csv()
 
-        # Expecting 'data' to be a Pydantic/SQLModel that has .model_dump() or a dict
-        data_dict = data.model_dump() if hasattr(data, "model_dump") else dict(data)
+        # Expecting 'data' to be a Pydantic/SQLModel that has  or a dict
+        data_dict = data.dict() if hasattr(data, "dict") else dict(data)
         data_dict["id"] = len(items) + 1  # Simple auto-increment
         items.append(data_dict)
         self._write_csv(items)
@@ -58,7 +58,7 @@ class CSVRepository(BaseRepository):
         items = self._read_csv()
         for item in items:
             if int(item["id"]) == item_id:
-                update_dict = data.model_dump(exclude_unset=True) if hasattr(data, "model_dump") else dict(data)
+                update_dict = data.dict(exclude_unset=True) if hasattr(data, "dict") else dict(data)
                 for key, value in update_dict.items():
                     # Only update known fields
                     if key in item:
