@@ -44,7 +44,7 @@ class PatientRepository(BaseRepository[None, PatientSchema]):
             return None  # Patient not found
 
         # Extract updated fields, excluding the id
-        update_data = obj_in.dict(exclude_unset=True, exclude={"id"})
+        update_data = obj_in.model_dump(exclude_unset=True, exclude={"id"})
         for key, value in update_data.items():
             setattr(patient, key, value)
 
@@ -52,7 +52,7 @@ class PatientRepository(BaseRepository[None, PatientSchema]):
         self.db.refresh(patient)
         return patient
     
-
+   # may need to check this code
     def delete(self, patient_id: int, force: bool = False) -> bool:
         patient = self.get(patient_id)
         if not patient:

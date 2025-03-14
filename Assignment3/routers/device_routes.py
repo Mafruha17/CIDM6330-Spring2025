@@ -56,7 +56,7 @@ def delete_device_route(device_id: int, db: Session = Depends(get_db)):
     """Delete a device."""
     if not delete_device(db, device_id):
         raise HTTPException(status_code=404, detail="Device not found")
-    return {"message": "Device deleted successfully"}
+    return {"message": "Device deleted successfully | or its stutus is inactive"}
 
 
 @router.post("/{patient_id}/assign-device/{device_id}", summary="Assign device to patient")

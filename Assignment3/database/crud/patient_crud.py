@@ -2,6 +2,7 @@ from sqlmodel import Session
 from schemas.patient import PatientSchema
 from repositories.patient_repository import PatientRepository
 from repositories.provider_repository import ProviderRepository
+from repositories.device_repository import DeviceRepository
 from typing import Optional, List
 from database.models import Patient, Provider
 
@@ -51,4 +52,16 @@ def remove_provider_from_patient(db: Session, patient_id: int, provider_id: int)
         db.commit()
         db.refresh(patient)
 
+    return patient
+# ✅ Remove a device from a patient (One-to-Many)
+def remove_device_from_patient(db: Session, patient_id: int, device_id: int) -> Optional[Patient]:
+    patient_repo = PatientRepository(db)
+    devise_repo = DeviceRepository(db)
+    patient = patient_repo.get(patient_id)
+    device = devise_repo.get(device_id)   
+    if not patient or not device:
+        return None  # Either patient or device does not exist
+    if device in patient.devices:
+        patient.devices.remove(device)  # Remove device from patient
+        db.commit()
     return patient

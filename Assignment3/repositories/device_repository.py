@@ -52,7 +52,7 @@ class DeviceRepository(BaseRepository[None, DeviceSchema]):
             raise ValueError(f"Device { item_id} not found")
 
         # 1. Check assignment to a patient
-        if device.patient_id is not None:  
+        if device.patient_id is not None and device.patient_id >0:  
             # Device is currently assigned
             if not force:
                 # 2. Prevent deletion if not forced
@@ -61,7 +61,7 @@ class DeviceRepository(BaseRepository[None, DeviceSchema]):
 
         # 3. Perform soft delete by deactivating the device
         device.active = False
-        self.session.commit()  # save change to the database
+        self.db.commit()  # save change to the database
         self.db.refresh(device)  # Refresh the instance with updated values
         # Optionally, return the device or a confirmation
         return device

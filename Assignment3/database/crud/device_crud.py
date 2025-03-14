@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from sqlmodel import Session
 from schemas.device import DeviceSchema
 from database.models import Device, Patient
@@ -18,9 +19,12 @@ def get_all_devices(db: Session) -> List[Device]:
 def update_device(db: Session, device_id: int, device_data: DeviceSchema) -> Optional[Device]:
     return DeviceRepository(db).update(device_id, device_data)
 
-def delete_device(db: Session, device_id: int) -> bool:
-    return DeviceRepository(db).delete(device_id)
-
+def delete_device(db: Session, device_id: int) -> Device:
+    success = DeviceRepository(db).delete(device_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Device not found")
+    return {"message": "Device deleted successfully"}
+    #return DeviceRepository(db).delete(device_id)
 
 def assign_device_to_patient(db: Session, patient_id: int, device_id: int):
     patient_repo = PatientRepository(db)
@@ -28,12 +32,12 @@ def assign_device_to_patient(db: Session, patient_id: int, device_id: int):
 
     patient = patient_repo.get(patient_id)
     device = device_repo.get(device_id)
-
+    
     if not patient or not device:
         return None  # Either record doesn't exist
 
-    # Check if the device is already assigned
-    if device.patient_id is not None:
+    # Check if the device is already assigned, and is (default value)## todo verify 
+    if (device.patient_id is not None and device.patient_id > 0):
         if device.patient_id == patient_id:
             # Already assigned to this patient, nothing to do
             return patient
@@ -46,7 +50,9 @@ def assign_device_to_patient(db: Session, patient_id: int, device_id: int):
 
     db.commit()
     db.refresh(patient)
-    return patient
+    #return patient
+    return {"message": "Device assigned to patient successfully"}
+
 
 
 def remove_device_from_patient(db: Session, patient_id: int, device_id: int):
@@ -71,7 +77,9 @@ def remove_device_from_patient(db: Session, patient_id: int, device_id: int):
     # Reset the device's foreign key to break the association
     device.patient_id = None
 
-    db.commit()
-    db.refresh(patient)
-    return patient
+    success = (db.commit(), db.refresh(patient))
+    if not success:
+        #return patient
+        raise ValueError("Device remove failed") 
+    return {"message": "Device removed from patient successfully"}
 

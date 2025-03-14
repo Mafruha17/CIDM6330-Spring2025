@@ -36,7 +36,7 @@ def get_provider(db: Session, provider_id: int) -> Optional[Provider]:
     return PatientRepository(db).get(patient_id)
 
 
-def delete_provider(db: Session, provider_id: int) -> Provider:
+def delete_provider(db: Session, provider_id: int):
     success = ProviderRepository(db).delete(provider_id)
     if not success:
         raise HTTPException(status_code=404, detail="Provider not found")
