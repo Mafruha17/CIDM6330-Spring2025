@@ -1,4 +1,4 @@
-from pydantic import BaseModel # ConfigDict
+from pydantic import BaseModel
 from typing import Optional
 
 class DeviceSchema(BaseModel):
@@ -11,8 +11,6 @@ class DeviceSchema(BaseModel):
     patient_id: Optional[int] = None
     active: bool = True
 
+    
     class Config:
-     orm_mode = True  # Enables serialization from ORM models
-
-
-   # model_config = ConfigDict(from_attributes=True)  # ✅ New Pydantic V2 style
+        from_attributes = True  # ✅ Update for Pydantic V2

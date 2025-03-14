@@ -32,4 +32,4 @@ class PatientSchema(BaseModel):
     providers: Optional[List[ProviderSchema]] = []  # Make it optional
 
     class Config:
-        orm_mode = True  # Enables conversion from ORM models
+        from_attributes = True  # ✅ Update for Pydantic V2

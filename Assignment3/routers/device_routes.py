@@ -58,13 +58,27 @@ def delete_device_route(device_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Device not found")
     return {"message": "Device deleted successfully"}
 
+
 @router.post("/{patient_id}/assign-device/{device_id}", summary="Assign device to patient")
 def assign_device_to_patient_route(patient_id: int, device_id: int, db: Session = Depends(get_db)):
-    """Assign a device to a patient."""
+    """Assign a device to a patient with reassignment rules."""
+
+    # Retrieve the device
+    device = get_device(db, device_id)  # ✅ Correct
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+
+    # Enforce reassignment rules
+    if device.patient_id != 0 and device.patient_id != patient_id:
+        raise HTTPException(status_code=400, detail="Device is already assigned to another patient")
+
+    # Assign the device to the patient
     assigned_patient = assign_device_to_patient(db, patient_id, device_id)
     if not assigned_patient:
-        raise HTTPException(status_code=404, detail="Either patient or device not found")
+        raise HTTPException(status_code=404, detail="Patient not found")
+
     return assigned_patient
+
 
 @router.delete("/{patient_id}/remove-device/{device_id}", summary="Remove device from patient")
 def remove_device_from_patient_route(patient_id: int, device_id: int, db: Session = Depends(get_db)):

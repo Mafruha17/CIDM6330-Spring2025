@@ -42,5 +42,8 @@ class Device(SQLModel, table=True):
     serial_number: str = Field(unique=True)
     active: bool = Field(default=True)
 
-    patient_id: int = Field(foreign_key="patient.id")
+    #patient_id: int = Field(foreign_key="patient.id")
+    # from typing import Optional
+    # After: allow device creation without an associated patient
+    patient_id: Optional[int] = Field(default=None, foreign_key="patient.id")
     patient: Optional["Patient"] = Relationship(back_populates="devices")

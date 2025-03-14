@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from typing import List
-
+from database.models import Provider  # ✅ Ensure this import is present
 from database.connection import get_db
 from schemas.provider import ProviderSchema
 from database.crud.provider_crud import (
@@ -11,10 +11,18 @@ from database.crud.provider_crud import (
 
 router = APIRouter(prefix="/providers", tags=["Providers"])
 
+def create_provider(session: Session, provider_data: dict):
+    """Creates a new provider and saves it to the database"""
+    new_provider = Provider(**provider_data)  # ✅ Unpack dictionary correctly
+    session.add(new_provider)
+    session.commit()
+    session.refresh(new_provider)
+    return new_provider
+
 @router.post("/", response_model=ProviderSchema, summary="Create a new provider")
 def create_provider_route(provider: ProviderSchema, db: Session = Depends(get_db)):
-    """Create a new provider"""
-    return create_provider(db, provider)
+    """Create a new provider using provider schema"""
+    return create_provider(db, provider.model_dump())  # ✅ Ensure model_dump() is used
 
 @router.get("/{provider_id}", response_model=ProviderSchema, summary="Get a provider by ID")
 def get_provider_route(provider_id: int, db: Session = Depends(get_db)):
