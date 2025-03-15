@@ -8,7 +8,7 @@ setup(
     packages=find_packages(),      # Automatically find all packages in this directory
     include_package_data=True,     # Include files from MANIFEST.in
     description="CIDM6330 - Assignment 3 with Repositories",
-    author="Your Name Here",
+    author="Mafruha Chowdhury",
     install_requires=[
         # List all your dependencies here, e.g.:
         # "fastapi",
