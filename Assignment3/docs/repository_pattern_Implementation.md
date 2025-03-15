@@ -4,6 +4,7 @@
 This document provides an overview of the **Repository Pattern** implemented in **Assignment 03**. The repositories act as an abstraction layer between the **API (FastAPI)** and the **underlying data storage**. This allows seamless switching between different persistence mechanisms (**SQLModel, CSV, and In-Memory**) without modifying the business logic.
 
 The repositories are designed to handle **CRUD operations** for **Patients, Providers, and Devices** while ensuring data consistency.
+
 ---
 
 ## **Table of Contents**
@@ -36,53 +37,43 @@ The base repository defines a **generic interface** for handling CRUD operations
 
 ### **✅ Base Repository Implementation**
 ```python
-from typing import Generic, TypeVar, List, Optional
+from abc import ABC, abstractmethod
+from typing import TypeVar, Generic, List, Optional
+from sqlmodel import Session, select
 
-T = TypeVar("T")  # Represents a database model class
-S = TypeVar("S")  # Represents a Pydantic schema
+T = TypeVar("T")  # The ORM model type (e.g., Patient, Provider, etc.)
+S = TypeVar("S")  # The Pydantic/SQLModel schema type
 
-class BaseRepository(Generic[T, S]):
-    def __init__(self, db, model: T):
+class BaseRepository(ABC, Generic[T, S]):
+    def __init__(self, db: Session, model: T):
         self.db = db
         self.model = model
 
-    def create(self, obj_in: S) -> T:
-        obj = self.model(**obj_in.dict())
-        self.db.add(obj)
-        self.db.commit()
-        self.db.refresh(obj)
-        return obj
+    @abstractmethod
+    def create(self, data: S) -> T:
+        pass
 
     def get(self, item_id: int) -> Optional[T]:
-        return self.db.query(self.model).filter(self.model.id == item_id).first()
+        statement = select(self.model).where(self.model.id == item_id)
+        return self.db.exec(statement).first()
 
     def get_all(self) -> List[T]:
-        return self.db.query(self.model).all()
+        statement = select(self.model)
+        return self.db.exec(statement).all()
 
-    def update(self, item_id: int, obj_in: S) -> Optional[T]:
-        obj = self.get(item_id)
-        if not obj:
-            return None
-        update_data = obj_in.dict(exclude_unset=True)
-        for key, value in update_data.items():
-            setattr(obj, key, value)
-        self.db.commit()
-        self.db.refresh(obj)
-        return obj
+    @abstractmethod
+    def update(self, item_id: int, data: S) -> Optional[T]:
+        pass
 
     def delete(self, item_id: int) -> bool:
-        obj = self.get(item_id)
+        statement = select(self.model).where(self.model.id == item_id)
+        obj = self.db.exec(statement).first()
         if obj:
             self.db.delete(obj)
             self.db.commit()
             return True
         return False
 ```
-
-### **🔹 Key Features:**
-- **Defines common CRUD operations**.
-- **Uses Generics (`T, S`)** to support different models and schemas.
-- **Provides a structured way to interact with repositories.**
 
 ---
 
@@ -92,19 +83,21 @@ This repository handles **SQL database persistence** using **SQLModel + SQLAlche
 ### **✅ Implementation**
 ```python
 from sqlmodel import Session, select
-from database.models import Patient
-from schemas.patient import PatientSchema
+from database.models import Patient, Device, Provider
 from repositories.base_repository import BaseRepository
 
-class SQLPatientRepository(BaseRepository[Patient, PatientSchema]):
-    def __init__(self, db: Session):
-        super().__init__(db, Patient)
-```
+class SQLRepository(BaseRepository):
+    def __init__(self, db: Session, model):
+        self.db = db
+        self.model = model
 
-### **🔹 Key Features:**
-- **Handles CRUD operations using SQLAlchemy ORM.**
-- **Supports transactions to ensure data integrity.**
-- **Uses dependency injection (`Depends(get_db)`) in API routes.**
+    def create(self, data):
+        obj = self.model(**data.dict())
+        self.db.add(obj)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
+```
 
 ---
 
@@ -126,16 +119,7 @@ class CSVRepository(BaseRepository):
             with open(self.file_path, mode='w', newline='', encoding='utf-8') as file:
                 writer = csv.DictWriter(file, fieldnames=self.fieldnames)
                 writer.writeheader()
-
-    def get_all(self) -> List[Dict[str, str]]:
-        with open(self.file_path, mode='r', newline='', encoding='utf-8') as file:
-            return list(csv.DictReader(file))
 ```
-
-### **🔹 Key Features:**
-- **Stores and retrieves data from CSV files.**
-- **Simple persistence mechanism without requiring a database.**
-- **Useful for lightweight applications and debugging.**
 
 ---
 
@@ -151,52 +135,84 @@ class InMemoryRepository(BaseRepository):
     def __init__(self):
         self.data: Dict[int, dict] = {}
         self.current_id = 1
-
-    def create(self, obj_in) -> dict:
-        item_dict = obj_in.dict()
-        item_dict["id"] = self.current_id
-        self.data[self.current_id] = item_dict
-        self.current_id += 1
-        return item_dict
-
-    def get_all(self) -> List[dict]:
-        return list(self.data.values())
 ```
-
-### **🔹 Key Features:**
-- **Stores data in an in-memory Python dictionary.**
-- **Allows quick testing without a database connection.**
-- **Data is lost when the application restarts.**
+Each repository follows a common interface, allowing interchangeable usage of storage backends.
 
 ---
-## **6. Patient Repository**
-For more details, refer to the [Patient Repository](docs/patient_repository.md).
+---
+## **6. Patient Repository (`repositories/patient_repository.py`)**
+Manages CRUD operations for patient entities.
 
-## **7. Provider Repository**
-For more details, refer to the [Provider Repository](docs/provider_repository.md).
+### **✅ Implementation**
+```python
+from sqlmodel import Session, select
+from database.models import Patient
+from schemas.patient import PatientSchema
+from repositories.base_repository import BaseRepository
 
-## **8. Device Repository**
-For more details, refer to the [Device Repository](docs/device_repository.md).
+class PatientRepository(BaseRepository[Patient, PatientSchema]):
+    def __init__(self, db: Session):
+        super().__init__(db, Patient)
+
+    def create(self, obj_in: PatientSchema) -> Patient:
+        obj = Patient(**obj_in.model_dump())
+        self.db.add(obj)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
+```
+
+---
+
+## **7. Provider Repository (`repositories/provider_repository.py`)**
+Manages CRUD operations for provider entities.
+
+### **✅ Implementation**
+```python
+from sqlmodel import Session, select
+from database.models import Provider
+from schemas.provider import ProviderSchema
+from repositories.base_repository import BaseRepository
+
+class ProviderRepository(BaseRepository[Provider, ProviderSchema]):
+    def __init__(self, db: Session):
+        super().__init__(db, Provider)
+
+    def create(self, obj_in: ProviderSchema) -> Provider:
+        obj = Provider(**obj_in.model_dump())
+        self.db.add(obj)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
+```
+
+---
+
+## **8. Device Repository (`repositories/device_repository.py`)**
+Manages CRUD operations for device entities.
+
+### **✅ Implementation**
+```python
+from sqlmodel import Session, select
+from database.models import Device
+from schemas.device import DeviceSchema
+from repositories.base_repository import BaseRepository
+
+class DeviceRepository(BaseRepository[Device, DeviceSchema]):
+    def __init__(self, db: Session):
+        super().__init__(db, Device)
+
+    def create(self, obj_in: DeviceSchema) -> Device:
+        obj = Device(**obj_in.model_dump())
+        self.db.add(obj)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
+```
 
 ---
 
 ## **9. Switching Between Repositories**
-FastAPI dynamically selects the repository based on environment variables:
-```python
-import os
-from repositories.sql_repository import SQLPatientRepository
-from repositories.csv_repository import CSVRepository
-from repositories.in_memory_repository import InMemoryRepository
-
-def get_patient_repository():
-    repo_type = os.getenv("REPO_TYPE", "sql")
-    if repo_type == "csv":
-        return CSVRepository()
-    elif repo_type == "memory":
-        return InMemoryRepository()
-    else:
-        return SQLPatientRepository()
-```
 To switch repositories, update the `.env` file:
 ```
 REPO_TYPE=sql  # Options: sql, csv, memory
@@ -204,11 +220,11 @@ REPO_TYPE=sql  # Options: sql, csv, memory
 
 ---
 
-## **Conclusion**
-- **The repository pattern abstracts data access**, ensuring **flexibility and maintainability**.
-- **Supports multiple storage backends** (SQL, CSV, In-Memory) with minimal API changes.
-- **Encapsulates CRUD operations**, keeping FastAPI routes clean and modular.
-- **Provides a scalable approach** for handling complex data persistence needs.
+## **10. Conclusion**
+- The repository pattern abstracts data access, ensuring flexibility and maintainability.
+- Supports multiple storage backends (SQL, CSV, In-Memory) with minimal API changes.
+- Encapsulates CRUD operations, keeping FastAPI routes clean and modular.
 
-By implementing the **Repository Pattern**, this project achieves **separation of concerns, testability, and easy adaptability** across different persistence layers. 🚀
+By implementing the Repository Pattern, this project achieves separation of concerns, testability, and easy adaptability across different persistence layers. 🚀
+
 

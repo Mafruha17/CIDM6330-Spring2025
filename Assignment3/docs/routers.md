@@ -8,9 +8,10 @@ Each router module corresponds to an entity and follows **dependency injection**
 ---
 
 ## **Table of Contents**
-1. [Patient Router](## todo)
+1. [Patient Router](#patient-router)
 2. [Provider Router](#provider-router)
 3. [Device Router](#device-router)
+
 ---
 ## **1. Patient Router (`routers/patient_routes.py`)**
 This router handles **CRUD operations** for **patients**, enabling interaction with different repositories via **dependency injection**.
@@ -21,37 +22,43 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from database.connection import get_db
 from schemas.patient import PatientSchema
-from repositories.patient_repository import PatientRepository
+from database.crud.patient_crud import (
+    create_patient, get_patient, get_all_patients, update_patient, delete_patient
+)
 
 router = APIRouter(prefix="/patients", tags=["Patients"])
 
-@router.post("/")
-def create_patient_route(patient: PatientSchema, db: Session = Depends(get_db)):
-    return PatientRepository(db).create(patient)
+@router.get("/", response_model=List[PatientSchema], summary="Retrieve all patients")
+def read_patients(db: Session = Depends(get_db)):
+    """Fetch all patients from the database."""
+    return get_all_patients(db)
 
-@router.get("/{patient_id}")
+@router.post("/", response_model=PatientSchema, summary="Create a new patient")
+def create_patient_route(patient: PatientSchema, db: Session = Depends(get_db)):
+    """Create a new patient in the database."""
+    return create_patient(db, patient)
+
+@router.get("/{patient_id}", response_model=PatientSchema, summary="Retrieve a patient by ID")
 def get_patient_route(patient_id: int, db: Session = Depends(get_db)):
-    patient = PatientRepository(db).get(patient_id)
+    """Fetch a single patient by ID."""
+    patient = get_patient(db, patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
     return patient
 
-@router.put("/{patient_id}")
+@router.put("/{patient_id}", response_model=PatientSchema, summary="Update an existing patient")
 def update_patient_route(patient_id: int, patient_data: PatientSchema, db: Session = Depends(get_db)):
-    return PatientRepository(db).update(patient_id, patient_data)
+    """Update patient details."""
+    return update_patient(db, patient_id, patient_data)
 
-@router.delete("/{patient_id}")
+@router.delete("/{patient_id}", summary="Delete a patient")
 def delete_patient_route(patient_id: int, db: Session = Depends(get_db)):
-    success = PatientRepository(db).delete(patient_id)
+    """Delete a patient from the database."""
+    success = delete_patient(db, patient_id)
     if not success:
         raise HTTPException(status_code=404, detail="Patient not found")
-    return {"message": "Patient deleted successfully"}
+    return {"message": "Deleted"}
 ```
-
-### **🔹 Key Features**
-- **Supports all CRUD operations** (`create`, `get`, `update`, `delete`).
-- **Uses dependency injection** for seamless repository switching.
-- **Implements proper exception handling** (`HTTP 404` for missing records).
 
 ---
 
@@ -64,38 +71,28 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from database.connection import get_db
 from schemas.provider import ProviderSchema
-from repositories.provider_repository import ProviderRepository
+from database.crud.provider_crud import (
+    create_provider, get_provider, get_all_providers, update_provider, delete_provider,
+    get_patients_by_provider
+)
 
 router = APIRouter(prefix="/providers", tags=["Providers"])
 
-@router.post("/")
+@router.post("/", response_model=ProviderSchema, summary="Create a new provider")
 def create_provider_route(provider: ProviderSchema, db: Session = Depends(get_db)):
-    return ProviderRepository(db).create(provider)
+    """Create a new provider using provider schema."""
+    return create_provider(db, provider.model_dump())
 
-@router.get("/{provider_id}")
+@router.get("/{provider_id}", response_model=ProviderSchema, summary="Get a provider by ID")
 def get_provider_route(provider_id: int, db: Session = Depends(get_db)):
-    provider = ProviderRepository(db).get(provider_id)
-    if not provider:
-        raise HTTPException(status_code=404, detail="Provider not found")
-    return provider
+    """Retrieve a provider by ID."""
+    return get_provider(db, provider_id)
 
-@router.put("/{provider_id}")
-def update_provider_route(provider_id: int, provider_data: ProviderSchema, db: Session = Depends(get_db)):
-    return ProviderRepository(db).update(provider_id, provider_data)
-
-@router.delete("/{provider_id}")
-def delete_provider_route(provider_id: int, db: Session = Depends(get_db)):
-    success = ProviderRepository(db).delete(provider_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Provider not found")
-    return {"message": "Provider deleted successfully"}
+@router.get("/", response_model=List[ProviderSchema], summary="Get all providers")
+def get_all_providers_route(db: Session = Depends(get_db)):
+    """Retrieve all providers."""
+    return get_all_providers(db)
 ```
-
-### **🔹 Key Features**
-- **CRUD operations for providers** (`create`, `get`, `update`, `delete`).
-- **Ensures seamless switching between repositories.**
-- **Uses dependency injection with `Depends(get_db)`.**
-- **Handles missing records with proper `HTTP 404` exceptions.**
 
 ---
 
@@ -108,38 +105,23 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 from database.connection import get_db
 from schemas.device import DeviceSchema
-from repositories.device_repository import DeviceRepository
+from database.crud.device_crud import (
+    create_device, get_device, get_all_devices, update_device, delete_device,
+    assign_device_to_patient, remove_device_from_patient
+)
 
 router = APIRouter(prefix="/devices", tags=["Devices"])
 
-@router.post("/")
+@router.post("/", response_model=DeviceSchema, summary="Create a new device")
 def create_device_route(device: DeviceSchema, db: Session = Depends(get_db)):
-    return DeviceRepository(db).create(device)
+    """Create a new device."""
+    return create_device(db, device)
 
-@router.get("/{device_id}")
+@router.get("/{device_id}", response_model=DeviceSchema, summary="Get a device by ID")
 def get_device_route(device_id: int, db: Session = Depends(get_db)):
-    device = DeviceRepository(db).get(device_id)
-    if not device:
-        raise HTTPException(status_code=404, detail="Device not found")
-    return device
-
-@router.put("/{device_id}")
-def update_device_route(device_id: int, device_data: DeviceSchema, db: Session = Depends(get_db)):
-    return DeviceRepository(db).update(device_id, device_data)
-
-@router.delete("/{device_id}")
-def delete_device_route(device_id: int, db: Session = Depends(get_db)):
-    success = DeviceRepository(db).delete(device_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Device not found")
-    return {"message": "Device deleted successfully"}
+    """Retrieve a device by ID."""
+    return get_device(db, device_id)
 ```
-
-### **🔹 Key Features**
-- **CRUD operations for devices** (`create`, `get`, `update`, `delete`).
-- **Supports linking devices to patients.**
-- **Implements proper exception handling (`HTTP 404`).**
-
 ---
 
 ## **Conclusion**
