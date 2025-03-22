@@ -1,0 +1,55 @@
+from rest_framework import serializers
+from .models import Patient, Provider, Device, PatientProvider
+
+
+class DeviceSerializer(serializers.ModelSerializer):
+    patient = serializers.StringRelatedField()  # shows patient's name if assigned
+
+    class Meta:
+        model = Device
+        fields = ['id', 'serial_number', 'active', 'patient']
+
+
+class SimpleProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = ['id', 'name', 'email', 'specialty']
+
+
+class SimpleDeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = ['id', 'serial_number', 'active']
+
+
+class PatientSerializer(serializers.ModelSerializer):
+    devices = SimpleDeviceSerializer(many=True, read_only=True)
+    providers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Patient
+        fields = ['id', 'name', 'email', 'age', 'active', 'devices', 'providers']
+
+    def get_providers(self, obj):
+        patient_providers = PatientProvider.objects.filter(patient=obj)
+        providers = [pp.provider for pp in patient_providers]
+        return SimpleProviderSerializer(providers, many=True).data
+
+
+class ProviderSerializer(serializers.ModelSerializer):
+    patients = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Provider
+        fields = ['id', 'name', 'email', 'specialty', 'patients']
+
+    def get_patients(self, obj):
+        patient_providers = PatientProvider.objects.filter(provider=obj)
+        patients = [pp.patient for pp in patient_providers]
+        return serializers.StringRelatedField(many=True).to_representation(patients)
+
+
+class PatientProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PatientProvider
+        fields = ['id', 'patient', 'provider']
