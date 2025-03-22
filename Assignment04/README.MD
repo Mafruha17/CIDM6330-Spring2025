@@ -1,16 +1,4 @@
 
-
-- A **Table of Contents (TOC)**  
-- **Installation Steps** starting from PostgreSQL setup  
-- Instructions for setting up the **virtual environment**, **Django**, **REST Framework**, and **pytest**
-
-Here’s the **finalized version** of your `README.md`:
-
----
-
-## ✅ Final `README.md` with TOC and Full Installation Guide
-
-```markdown
 # Assignment 04: Migrate API from FastAPI to Django with Repository Pattern
 
 ## 🏫 West Texas A&M University
