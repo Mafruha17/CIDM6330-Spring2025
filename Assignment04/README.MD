@@ -4,7 +4,7 @@
 ## 🏫 West Texas A&M University
 - **Semester:** Spring 2025  
 - **Course:** CIDM6330/01 Software Engineering  
-- **Student:** *[Your Name]*
+- **Student:** Mafruha Chowdhury
 
 ---
 
