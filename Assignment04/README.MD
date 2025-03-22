@@ -1,4 +1,4 @@
-Perfect! Let's enhance your `README.md` with:
+
 
 - A **Table of Contents (TOC)**  
 - **Installation Steps** starting from PostgreSQL setup  
