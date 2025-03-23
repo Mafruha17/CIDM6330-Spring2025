@@ -7,6 +7,15 @@
 - **Student:** Mafruha Chowdhury
 
 ---
+Git repo link 
+---
+[https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04)
+
+[EDR for assignment04 ](/docs/edr.PNG)
+
+
+[EDR](/docs/Class%20Diagram.png)
+
 
 ## **Table of Contents**
 1. [Overview](#overview)  
@@ -161,7 +170,7 @@ Assignment04/                      # Project Root
    - **`patient_repository.py`, `provider_repository.py`, `device_repository.py`**: Concrete repository classes that inherit from `BaseRepository`.
 
 4. **`mainapp/views/`**  
-   - **`patient_views.py`, `device_views.py`, `provider_views.py`**: Define your Django REST Framework ViewSets (either `ModelViewSet` or `ViewSet`) for CRUD and custom assignment actions.
+   - **`patient_views.py`, `device_views.py`, `provider_views.py`**: Defined Django REST Framework ViewSets (either `ModelViewSet` or `ViewSet`) for CRUD and custom assignment actions.
 
 5. **`mainapp/admin.py`**  
    - Registers models in the Django admin site.  
