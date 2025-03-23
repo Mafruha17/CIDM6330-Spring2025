@@ -1,5 +1,4 @@
 from django.db import models
-from django.db import models
 from django.core.exceptions import ValidationError
 
 
@@ -17,9 +16,18 @@ class Provider(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     specialty = models.CharField(max_length=100)
+    
+    # New: ManyToManyField that uses your join model
+    patients = models.ManyToManyField(
+        'Patient',                  # or Patient if it's already defined above
+        through='PatientProvider',  # reference your join table
+        related_name='providers',   # so Patient can do .providers
+        blank=True
+    )
 
     def __str__(self):
         return self.name
+
 
 class Device(models.Model):
     serial_number = models.CharField(max_length=100, unique=True)
