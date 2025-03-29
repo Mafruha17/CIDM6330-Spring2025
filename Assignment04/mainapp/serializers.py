@@ -34,22 +34,7 @@ class PatientSerializer(serializers.ModelSerializer):
         patient_providers = PatientProvider.objects.filter(patient=obj)
         providers = [pp.provider for pp in patient_providers]
         return SimpleProviderSerializer(providers, many=True).data
-
-"""
-class ProviderSerializer(serializers.ModelSerializer):
-    patients = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Provider
-        fields = ['id', 'name', 'email', 'specialty', 'patients']
-
-    def get_patients(self, obj):
-        patient_providers = PatientProvider.objects.filter(provider=obj)
-        patients = [pp.patient for pp in patient_providers]
-        return serializers.StringRelatedField(many=True).to_representation(patients)
-
-"""
-
+    
 
 class ProviderSerializer(serializers.ModelSerializer):
     # 1. This field allows adding/removing patient IDs
