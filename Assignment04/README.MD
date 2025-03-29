@@ -7,41 +7,59 @@
 - **Student:** Mafruha Chowdhury
 
 ---
-Git repo link 
----
-[https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04)
 
-[EDR for assignment04 ](/docs/edr.PNG)
+**Git repo link:** [CIDM6330-Spring2025/Assignment04](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04)
 
-
-[EDR](/docs/Class%20Diagram.png)
-
-
-## **Table of Contents**
-1. [Overview](#overview)  
-2. [Objectives](#objectives)  
-3. [Project Folder Directory](#project-folder-directory)  
-4. [Installation & Setup](#installation--setup)  
-5. [Code Files & Explanation](#code-files--explanation)  
-6. [API Endpoints](#api-endpoints)  
-7. [Using the Django Admin](#using-the-django-admin)  
-8. [Testing](#testing)  
-9. [Future Improvements](#future-improvements)  
-10. [Conclusion](#conclusion)
+- [ERD for assignment04](/docs/edr.PNG)
+- [Class Diagram](/docs/Class%20Diagram.png)
+- [Code Files & Explanation](#code-files--explanation)
 
 ---
 
-## **Overview**
-This assignment migrates our prior FastAPI application to **Django** with the **Django REST Framework**, preserving a clean, layered architecture:
 
-- **Repository Pattern** for data access  
+## 📌 Table of Contents
+
+- [Overview](#-overview)
+- [Objectives](#objectives)
+- [Project Folder Directory](#project-folder-directory)
+- [Installation & Setup](#installation--setup)
+- [Code Files & Explanation](#code-files--explanation) | (`to view the code,click the link (code files)`)
+- [API Endpoints](#api-endpoints)
+- [Using the Django Admin](#using-the-django-admin)
+- [Testing](#testing)
+- [Future Improvements](#future-improvements)
+- [Conclusion](#conclusion)
+
+---
+
+## 🧹 Overview
+This is a Django REST Framework (DRF)-based API designed to manage patients, devices, and providers in a healthcare system. The project was migrated from a FastAPI-based architecture (Assignment 03) and continues to follow a clean, modular, and scalable structure. It includes JWT authentication, CRUD operations, and a repository pattern for abstraction and testability, preserving a clean, layered architecture:
+
+project uses:
+- Django 5.1+
+- Django REST Framework
+- PostgreSQL
+- Repository Pattern
+- JWT Authentication (Simple JWT)
+------
+- 🔐 JWT Authentication using Simple JWT (access & refresh tokens)
+- 📁 Modular architecture inspired by the FastAPI project
+- 🔄 Full CRUD support for:
+  - Patients
+  - Devices
+  - Providers
+- 📎 Relationship management:
+  - A **patient** can have multiple **devices**
+  - A **provider** can have multiple **patients**
+  - A **patient** can have multiple **providers**
 - **ModelViewSet** or custom `ViewSet` for CRUD APIs  
 - **One-to-Many** relationship: **Patients** ↔ **Devices**  
 - **Many-to-Many** relationship: **Patients** ↔ **Providers**  
-- **Assignment/Unassignment** logic via custom actions and Django Admin inlines  
-- **PostgreSql** data storage
-
+- **Assignment/Unassignment** logic via custom actions and Django Admin inlines 
+- 🧠 Repository pattern for decoupled data logic
+- 🧪 Pytest support for test automation (no reliance on Django shell)
 ---
+
 
 ## **Objectives**
 1. Transition core API logic from FastAPI to Django REST Framework  
@@ -71,17 +89,19 @@ Assignment04/                      # Project Root
 │   │   ├── patient_repository.py
 │   │   ├── provider_repository.py
 │   │   └── device_repository.py
-│   ├── serializers.py             # DRF serializers (PatientSerializer, etc.)
-│   ├── tests/                     # Pytest tests for models, views, assignments
+│   ├── serializers.py             # DRF serializers (PatientSerializer, etc.) |schemas validation
+│   |
+│   ├── views/                     # Modular ViewSets (ModelViewSet or custom)
+│   |__init__.py
+│   ├── patient_views.py
+│   ├── device_views.py
+│   └── provider_views.py
+|   ├── tests/                     # Pytest tests for models, views, assignments
 │   │   ├── __init__.py
 │   │   ├── test_device.py
 │   │   ├── test_patient.py
 │   │   └── test_provider.py
-│   └── views/                     # Modular ViewSets (ModelViewSet or custom)
-│       ├── __init__.py
-│       ├── patient_views.py
-│       ├── device_views.py
-│       └── provider_views.py
+├── docs/                     # ERD, design documentation
 ├── manage.py                      # Django management commands (runserver, migrate, etc.)
 ├── requirements.txt               # Installed dependencies
 └── README.md                      # Project documentation
@@ -98,6 +118,9 @@ Assignment04/                      # Project Root
 ---
 
 ## **Installation & Setup**
+Follow setup instructions provided in [Installation & Setup](#installation--setup) section.
+
+---
 
 1. **Clone the Repository**
    ```bash
@@ -154,53 +177,84 @@ Assignment04/                      # Project Root
 
 ---
 
+---
+
+## 🔐 JWT Authentication
+
+This API uses [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) for authentication.
+
+Use Simple JWT endpoints (`/api/token/` and `/api/token/refresh/`) for authentication. See JWT Authentication above.
+
+- **Get Token**
+  ```http
+  POST /api/token/
+  {
+    "username": "your_username",
+    "password": "your_password"
+  }
+  ```
+
+- **Refresh Token**
+  ```http
+  POST /api/token/refresh/
+  {
+    "refresh": "<your_refresh_token>"
+  }
+  ```
+
+- **Authorization Header**
+  ```
+  Authorization: Bearer <access_token>
+  ```
+
+---
 ## **Code Files & Explanation**
 
-1. **`mainapp/models.py`**  
+1. **[`models.py`](/mainapp/models.py)**  : Defines data models.
    - Defines **Patient**, **Provider**, **Device**, and **PatientProvider** models.  
    - **PatientProvider** is a join model for many-to-many (patients ↔ providers).  
    - **Device** uses a `ForeignKey` to `Patient`, representing one-to-many.
 
-2. **`mainapp/serializers.py`**  
+2. **[`serializers.py`](mainapp/serializers.py)**  :Input/output validation.
    - Houses this project **DRF serializers** (e.g., `PatientSerializer`, `ProviderSerializer`, `DeviceSerializer`).  
    - These manage input/output validation and handle nested relationships if needed.
 
-3. **`mainapp/repositories/`**  
+3. **[`repositories/`](mainapp/repositories)** : Data abstraction.
    - **`base_repository.py`**: Abstract base class using `abc` for CRUD methods.  
    - **`patient_repository.py`, `provider_repository.py`, `device_repository.py`**: Concrete repository classes that inherit from `BaseRepository`.
 
-4. **`mainapp/views/`**  
+4. **[`views/`](mainapp/views)**: API endpoints.
    - **`patient_views.py`, `device_views.py`, `provider_views.py`**: Defined Django REST Framework ViewSets (either `ModelViewSet` or `ViewSet`) for CRUD and custom assignment actions.
 
-5. **`mainapp/admin.py`**  
+5. **[`admin.py`](mainapp/admin.py)**  Django Admin configurations.
+
    - Registers models in the Django admin site.  
    - Adds **inlines** for `PatientProvider` (to manage providers for patients) and `Device` (to manage devices assigned to a patient).
 
-6. **`djconfig/urls.py`**  
+6. **[`urls.py`](djconfig/urls.py)**  
    - Root URL configuration, includes `mainapp.urls` under `/api/`.  
 
-7. **`mainapp/urls.py`**  
+7. **[`urls.py`](mainapp/urls.py)**  
    - Uses `DefaultRouter()` to register routes for `PatientViewSet`, `ProviderViewSet`, and `DeviceViewSet`.  
 
-8. **Tests (`mainapp/tests/*.py`)**  
-   - **`test_patient.py`, `test_device.py`, `test_provider.py`**: Pytest test files verifying CRUD, assignment endpoints, and repository logic.
+8. **`Test`**  
+   - **[`tests`](test_patient.py)**, **[`test_device.py`](test_device.py)**, **[`test_provider.py`](test_provider.py)**: Pytest test files verifying CRUD, assignment endpoints, and repository logic.
 
 ---
 
-## **API Endpoints**
+## 📬 API Endpoints (Sample)
 
-| **Resource** | **Method** | **Path**                              | **Description**                    |
-|--------------|------------|---------------------------------------|------------------------------------|
-| **Patients** | GET, POST  | `/api/patients/`                      | List or Create new Patient         |
-|              | GET, PUT, PATCH, DELETE | `/api/patients/{id}/`           | Retrieve, Update, or Delete Patient|
-| **Providers**| GET, POST  | `/api/providers/`                     | List or Create new Provider        |
-|              | GET, PUT, PATCH, DELETE | `/api/providers/{id}/`          | Retrieve, Update, or Delete Provider|
-| **Devices**  | GET, POST  | `/api/devices/`                       | List or Create new Device          |
-|              | GET, PUT, PATCH, DELETE | `/api/devices/{id}/`            | Retrieve, Update, or Delete Device |
-| **Assign**   | POST       | `/api/providers/{id}/assign_patient/` | Assign a patient to a provider     |
-|              | POST       | `/api/providers/{id}/remove_patient/` | Remove a patient from a provider   |
-|              | POST       | `/api/devices/{id}/assign/`           | Assign device to a patient         |
-|              | POST       | `/api/devices/{id}/unassign/`         | Unassign device from a patient     |
+| Method | Endpoint                           | Description                         |
+|--------|------------------------------------|-------------------------------------|
+| POST   | `/patients/`                       | Create a new patient                |
+| GET    | `/patients/{id}/`                  | Retrieve a patient                  |
+| PUT    | `/patients/{id}/assign_provider/`  | Assign a provider to a patient      |
+| DELETE | `/patients/{id}/remove_device/`    | Remove a device from a patient      |
+| POST   | `/devices/`                        | Create a new device                 |
+| POST   | `/providers/`                      | Create a new provider               |
+| GET    | `/providers/{id}/patients/`        | List all patients for a provider    |
+
+> Full endpoint list is available in `core/urls.py` or through Django DRF’s browsable API.
 
 ---
 
@@ -220,7 +274,8 @@ Assignment04/                      # Project Root
 
 ---
 
-## **Testing**
+## 🧪 Testing
+
 
 1. **Install** `pytest` and `pytest-django`:  
    ```bash
@@ -240,18 +295,41 @@ Assignment04/                      # Project Root
    ```bash
    pytest mainapp/tests/test_provider.py
    ```
+  Ensure your virtual environment is active and run:
+
+```bash
+pytest
+```
+
+- All test files are located in `core/tests/`
+- Test coverage includes repositories and database logic
 
 ---
 
-## **Future Improvements would be nice in real world project **
+## 📎 Notes
 
-- **Authentication & Authorization**: Add token-based or JWT auth, will get it done when assignment is  
-- **Filtering & Pagination**: Let users filter or paginate results (e.g. `/api/patients/?active=true`).  
-- **Docker & Deployment**: Containerize the Django app for consistent deployments.  
-- **Swagger/OpenAPI**: Auto-document endpoints with DRF or third-party packages.  
-- **Custom Frontend**: Build a React/Vue/Angular UI to handle assignment/unassignment visually without the DRF browsable UI.
+- Ensure each module has `__init__.py` files to avoid import issues
+- DRF Browsable API is enabled for ease of testing
+- Django Admin is accessible at `/admin/`
+- API protected using JWT tokens | Secure API endpoints
+- Use Postman or Curl for testing authentication and API routes
+ 
 
 ---
+
+## 📚 References
+
+- [Django REST Framework](https://www.django-rest-framework.org/)
+- [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/)
+- [Pytest](https://docs.pytest.org/en/stable/)
+- [PostgreSQL](https://www.postgresql.org/)
+
+
+---
+
+
+
 
 ## **Conclusion**
 This Django project exemplifies a thorough migration from FastAPI to Django REST Framework while preserving **clean architecture** and **repository-driven** data access. Admin inlines make it easier to assign/unassign relationships without deleting objects, and robust tests ensure API reliability. It’s a strong foundation for further enhancements and real-world deployment.
+
