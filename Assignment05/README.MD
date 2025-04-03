@@ -39,14 +39,20 @@ This is a Django-based API designed to manage patients, devices, and providers i
 - Celery/Redis for message queuing (MQ)
 - Django’s built-in `unittest` framework for testing
 
-Project uses:
-- Django 5.1+
-- Django Ninja
-- PostgreSQL
-- Repository Pattern
-- JWT Authentication (Simple JWT)
-- Docker & Docker Compose
-- Celery & Redis for asynchronous tasks
+### ✅ Installed and Ready
+
+| Library                           | Status       | Purpose                                |
+|-----------------------------------|--------------|----------------------------------------|
+| `django 5.1.7`                    | ✅           | Core framework                         |
+| `django-ninja 1.4.0`              | ✅           | Ninja API routing                      |
+| `pydantic 2.11.1`                 | ✅           | Schema validation                      |
+| `celery 5.3.1`                    | ✅           | Async task queue                       |
+| `redis 4.5.5`                     | ✅           | Message broker backend                 |
+| `psycopg2-binary 2.9.10`          | ✅           | PostgreSQL driver                      |
+| `pytest`, `pytest-django`         | ✅           | Unit testing framework                 |
+| `djangorestframework`             | ✅           | Optional (OK to keep for admin/debug)  |
+| `djangorestframework-simplejwt`   | ✅ (but unused) | Can be uninstalled for now          |
+
 
 ------
 - 🔐 JWT Authentication using Simple JWT (access & refresh tokens)
@@ -251,7 +257,8 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 ```
 
-Start everything:
+Start everything:n
+
 
 ```bash
 docker-compose up --build
@@ -292,6 +299,20 @@ def patient_created(sender, instance, created, **kwargs):
 ```
 
 ---
+## Troubleshooting some issues 
+
+### Database Container Not Actually Running
+
+Ensure that your Postgres container is up and running before Django attempts to connect:
+
+- Run the command below to verify the container status:
+  ```bash
+  docker compose ps
+  ```
+- Check that the service named `db` (or the equivalent defined in your `docker-compose.yml`) is in the **Up** state.
+- If your compose file doesn’t define a `db` service, Django won’t be able to connect to `db:5432`. Make sure to add a Postgres service to your Docker Compose configuration.
+
+
 
 ## 📦 Access API
 
@@ -497,6 +518,70 @@ pytest
  
 
 ---
+Below is an example section you can add to your README.md to verify your configuration and results:
+
+---
+
+## Verification and Results
+
+After you’ve built and started your Docker services, follow these steps to confirm that everything is working as expected:
+
+### 1. Check Container Status
+
+Ensure that all your containers are up and running by executing:
+```bash
+docker compose ps
+```
+You should see entries for your Django app (e.g., `web` or `django_app`), Postgres (e.g., `db` or `postgres_db`), Redis (e.g., `redis_broker`), and Celery Worker (e.g., `celery_worker`) with the **State** set to "Up".
+
+### 2. Verify Django API and Migrations
+
+- **Check Logs:**  
+  Review the Django service logs to ensure migrations have been applied and there are no startup errors:
+  ```bash
+  docker compose logs web
+  ```
+  (Use your actual service name if different, e.g., `django_app`.)
+
+- **Access the API:**  
+  Open your browser and navigate to:
+  - **API Endpoints:** [http://localhost:8000](http://localhost:8000)
+  - **Django Admin:** [http://localhost:8000/admin/](http://localhost:8000/admin/)  
+  Log in with your superuser credentials to verify admin functionality.
+
+### 3. Verify Celery Worker
+
+Check that your Celery worker has connected to Redis and is ready to process tasks:
+```bash
+docker compose logs celery_worker
+```
+Look for log entries indicating a successful connection (e.g., “Connected to redis://redis:6379/0”) and readiness to process tasks.
+
+### 4. Verify Postgres
+
+Make sure your Postgres container is functioning correctly:
+```bash
+docker compose logs db
+```
+Confirm that there are no error messages and that the database is running normally.
+
+### 5. Test a Celery Task (Optional)
+
+If you have configured a Celery task (such as sending a notification when a new patient is created):
+- **Trigger the Task:**  
+  Create a new patient via the API or Django Admin.
+- **Check Celery Logs:**  
+  Run:
+  ```bash
+  docker compose logs celery_worker
+  ```
+  You should see a log entry indicating that the task (e.g., `notify_new_patient_created`) was received and is being processed.
+
+---
+
+By following these steps, you can verify that your Dockerized environment—comprising Django, Postgres, Redis, and Celery—is properly configured and operational. If any issues arise, refer to the logs as described above for troubleshooting.
+
+___
 
 ## 📚 References
 

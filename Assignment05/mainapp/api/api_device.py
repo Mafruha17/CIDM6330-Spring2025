@@ -1,3 +1,5 @@
+# ✅ API Modules: Device Endpoints Using Django Ninja
+
 # mainapp/api/api_device.py
 from ninja import Router
 from typing import List
