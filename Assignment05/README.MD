@@ -301,6 +301,590 @@ def patient_created(sender, instance, created, **kwargs):
 ---
 ## Troubleshooting some issues 
 
+##### How to run and troubleshoot Docker component
+
+###
+
+### Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+###
+
+#### 1. Clone the Repository
+
+```bash
+git clone <your_repository_url>
+cd Assignment05
+```
+
+#### 2. Build Docker Images
+
+To rebuild Docker images from scratch, use:
+
+```bash
+docker compose build --no-cache
+```
+
+#### 3. Start Docker Containers
+
+Run the containers in detached mode:
+
+```bash
+docker compose up -d
+```
+
+#### 4. Check Container Status
+
+```bash
+docker compose ps
+```
+
+#### 5. View Logs
+
+Monitor logs in real-time:
+
+```bash
+docker compose logs -f
+```
+
+### Celery Integration
+
+Celery is integrated for asynchronous tasks handling.
+
+- **Broker**: Redis (`redis://redis:6379/0`)
+- **Backend**: Redis (`redis://redis:6379/1`)
+
+Example Task:
+
+```python
+# mainapp/tasks.py
+from celery import shared_task
+
+@shared_task
+def notify_new_patient_created(patient_id):
+    print(f"New patient created with ID: {patient_id}")
+```
+
+### Database Migrations
+
+Automatically applied at startup via Docker Compose.
+
+Manual migrations (if needed):
+
+```bash
+docker compose exec django_app python manage.py makemigrations
+docker compose exec django_app python manage.py migrate
+```
+
+### Accessing the Django App
+
+- Django app runs locally on `http://localhost:8000`.
+- API documentation available at `http://localhost:8000/api/docs` (if enabled).
+
+### Stopping and Cleaning Up
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+To clean Docker volumes (if needed):
+
+```bash
+docker compose down -v
+```
+
+### Troubleshooting Common Issues
+
+If Docker fails to connect, restart Docker Desktop and retry the commands:
+
+- Right-click Docker Desktop from system tray and select **Restart Docker**.
+
+Verify Docker setup:
+
+```bash
+docker info
+```
+
+---
+
+### Project Components
+
+- **Django Ninja**: API layer
+- **Celery/Redis**: Async task management
+- **PostgreSQL**: Database
+- **Docker Compose**: Container orchestration
+
+Ensure Docker Desktop is running and correctly configured before executing commands.
+
+### ## How to run and troubleshoot Docker component
+
+###
+
+### Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+###
+
+#### 1. Clone the Repository
+
+```bash
+git clone <your_repository_url>
+cd Assignment05
+```
+
+#### 2. Build Docker Images
+
+To rebuild Docker images from scratch, use:
+
+```bash
+docker compose build --no-cache
+```
+
+#### 3. Start Docker Containers
+
+Run the containers in detached mode:
+
+```bash
+docker compose up -d
+```
+
+#### 4. Check Container Status
+
+```bash
+docker compose ps
+```
+
+#### 5. View Logs
+
+Monitor logs in real-time:
+
+```bash
+docker compose logs -f
+```
+
+### Celery Integration
+
+Celery is integrated for asynchronous tasks handling.
+
+- **Broker**: Redis (`redis://redis:6379/0`)
+- **Backend**: Redis (`redis://redis:6379/1`)
+
+Example Task:
+
+```python
+# mainapp/tasks.py
+from celery import shared_task
+
+@shared_task
+def notify_new_patient_created(patient_id):
+    print(f"New patient created with ID: {patient_id}")
+```
+
+### Database Migrations
+
+Automatically applied at startup via Docker Compose.
+
+Manual migrations (if needed):
+
+```bash
+docker compose exec django_app python manage.py makemigrations
+docker compose exec django_app python manage.py migrate
+```
+
+### Accessing the Django App
+
+- Django app runs locally on `http://localhost:8000`.
+- API documentation available at `http://localhost:8000/api/docs` (if enabled).
+
+### Stopping and Cleaning Up
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+To clean Docker volumes (if needed):
+
+```bash
+docker compose down -v
+```
+
+### Troubleshooting Common Issues
+
+If Docker fails to connect, restart Docker Desktop and retry the commands:
+
+- Right-click Docker Desktop from system tray and select **Restart Docker**.
+
+Verify Docker setup:
+
+```bash
+docker info
+```
+
+---
+
+### Project Components
+
+- **Django Ninja**: API layer
+- **Celery/Redis**: Async task management
+- **PostgreSQL**: Database
+- **Docker Compose**: Container orchestration
+
+Ensure Docker Desktop is running and correctly configured before executing commands.
+
+### ## How to run and troubleshoot Docker component
+
+###
+
+### Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+###
+
+#### 1. Clone the Repository
+
+```bash
+git clone <your_repository_url>
+cd Assignment05
+```
+
+#### 2. Build Docker Images
+
+To rebuild Docker images from scratch, use:
+
+```bash
+docker compose build --no-cache
+```
+
+#### 3. Start Docker Containers
+
+Run the containers in detached mode:
+
+```bash
+docker compose up -d
+```
+
+#### 4. Check Container Status
+
+```bash
+docker compose ps
+```
+
+#### 5. View Logs
+
+Monitor logs in real-time:
+
+```bash
+docker compose logs -f
+```
+
+### Celery Integration
+
+Celery is integrated for asynchronous tasks handling.
+
+- **Broker**: Redis (`redis://redis:6379/0`)
+- **Backend**: Redis (`redis://redis:6379/1`)
+
+Example Task:
+
+```python
+# mainapp/tasks.py
+from celery import shared_task
+
+@shared_task
+def notify_new_patient_created(patient_id):
+    print(f"New patient created with ID: {patient_id}")
+```
+
+### Database Migrations
+
+Automatically applied at startup via Docker Compose.
+
+Manual migrations (if needed):
+
+```bash
+docker compose exec django_app python manage.py makemigrations
+docker compose exec django_app python manage.py migrate
+```
+
+### Accessing the Django App
+
+- Django app runs locally on `http://localhost:8000`.
+- API documentation available at `http://localhost:8000/api/docs` (if enabled).
+
+### Stopping and Cleaning Up
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+To clean Docker volumes (if needed):
+
+```bash
+docker compose down -v
+```
+
+### Troubleshooting Common Issues
+
+If Docker fails to connect, restart Docker Desktop and retry the commands:
+
+- Right-click Docker Desktop from system tray and select **Restart Docker**.
+
+Verify Docker setup:
+
+```bash
+docker info
+```
+
+---
+
+### Project Components
+
+- **Django Ninja**: API layer
+- **Celery/Redis**: Async task management
+- **PostgreSQL**: Database
+- **Docker Compose**: Container orchestration
+
+Ensure Docker Desktop is running and correctly configured before executing commands.
+
+## How to run and troubleshoot Docker component
+
+###
+
+### Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+###
+
+#### 1. Clone the Repository
+
+```bash
+git clone <your_repository_url>
+cd Assignment05
+```
+
+#### 2. Build Docker Images
+
+To rebuild Docker images from scratch, use:
+
+```bash
+docker compose build --no-cache
+```
+
+#### 3. Start Docker Containers
+
+Run the containers in detached mode:
+
+```bash
+docker compose up -d
+```
+
+#### 4. Check Container Status
+
+```bash
+docker compose ps
+```
+
+#### 5. View Logs
+
+Monitor logs in real-time:
+
+```bash
+docker compose logs -f
+```
+
+### Celery Integration
+
+Celery is integrated for asynchronous tasks handling.
+
+- **Broker**: Redis (`redis://redis:6379/0`)
+- **Backend**: Redis (`redis://redis:6379/1`)
+
+Example Task:
+
+```python
+# mainapp/tasks.py
+from celery import shared_task
+
+@shared_task
+def notify_new_patient_created(patient_id):
+    print(f"New patient created with ID: {patient_id}")
+```
+
+### Database Migrations
+
+Automatically applied at startup via Docker Compose.
+
+Manual migrations (if needed):
+
+```bash
+docker compose exec django_app python manage.py makemigrations
+docker compose exec django_app python manage.py migrate
+```
+
+### Accessing the Django App
+
+- Django app runs locally on `http://localhost:8000`.
+- API documentation available at `http://localhost:8000/api/docs` (if enabled).
+
+### Stopping and Cleaning Up
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+To clean Docker volumes (if needed):
+
+```bash
+docker compose down -v
+```
+
+### Troubleshooting Common Issues
+
+If Docker fails to connect, restart Docker Desktop and retry the commands:
+
+- Right-click Docker Desktop from system tray and select **Restart Docker**.
+
+Verify Docker setup:
+
+```bash
+docker info
+```
+## How to run and troubleshoot Docker component
+
+###
+
+### Prerequisites
+
+- Docker Desktop
+- Docker Compose
+
+###
+
+#### 1. Clone the Repository
+
+```bash
+git clone <your_repository_url>
+cd Assignment05
+```
+
+#### 2. Build Docker Images
+
+To rebuild Docker images from scratch, use:
+
+```bash
+docker compose build --no-cache
+```
+
+#### 3. Start Docker Containers
+
+Run the containers in detached mode:
+
+```bash
+docker compose up -d
+```
+
+#### 4. Check Container Status
+
+```bash
+docker compose ps
+```
+
+#### 5. View Logs
+
+Monitor logs in real-time:
+
+```bash
+docker compose logs -f
+```
+
+### Celery Integration
+
+Celery is integrated for asynchronous tasks handling.
+
+- **Broker**: Redis (`redis://redis:6379/0`)
+- **Backend**: Redis (`redis://redis:6379/1`)
+
+Example Task:
+
+```python
+# mainapp/tasks.py
+from celery import shared_task
+
+@shared_task
+def notify_new_patient_created(patient_id):
+    print(f"New patient created with ID: {patient_id}")
+```
+
+### Database Migrations
+
+Automatically applied at startup via Docker Compose.
+
+Manual migrations (if needed):
+
+```bash
+docker compose exec django_app python manage.py makemigrations
+docker compose exec django_app python manage.py migrate
+```
+
+### Accessing the Django App
+
+- Django app runs locally on `http://localhost:8000`.
+- API documentation available at `http://localhost:8000/api/docs` (if enabled).
+
+### Stopping and Cleaning Up
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+To clean Docker volumes (if needed):
+
+```bash
+docker compose down -v
+```
+
+### Troubleshooting Common Issues
+
+If Docker fails to connect, restart Docker Desktop and retry the commands:
+
+- Right-click Docker Desktop from system tray and select **Restart Docker**.
+
+Verify Docker setup:
+
+```bash
+docker info
+```
+
+---
+
+### Project Components
+
+- **Django Ninja**: API layer
+- **Celery/Redis**: Async task management
+- **PostgreSQL**: Database
+- **Docker Compose**: Container orchestration
+
+Ensure Docker Desktop is running and correctly configured before executing commands.
+
+
 ### Database Container Not Actually Running
 
 Ensure that your Postgres container is up and running before Django attempts to connect:
@@ -381,33 +965,6 @@ Follow setup instructions provided in [Installation & Setup](#installation--setu
 
 ---
 
-## 🔐 JWT Authentication
-
-This API uses [Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) for authentication.
-
-Use Simple JWT endpoints (`/api/token/` and `/api/token/refresh/`) for authentication. See JWT Authentication above.
-
-- **Get Token**
-  ```http
-  POST /api/token/
-  {
-    "username": "your_username",
-    "password": "your_password"
-  }
-  ```
-
-- **Refresh Token**
-  ```http
-  POST /api/token/refresh/
-  {
-    "refresh": "<your_refresh_token>"
-  }
-  ```
-
-- **Authorization Header**
-  ```
-  Authorization: Bearer <access_token>
-  ```
 
 ---
 ## **Code Files & Explanation**
@@ -507,6 +1064,139 @@ pytest
 - Test coverage includes repositories and database logic
 
 ---
+Below is a sample **README.md** section that explains how to set up and run your tests (including Ninja API tests with `TestClient`). Adjust any paths, commands, or environment variable details to match your specific project.
+
+---
+
+# Running Tests
+
+This project uses **pytest** (along with **pytest-django** and **ninja.testing.TestClient**) to test the Django Ninja API and other application logic.
+
+## Prerequisites
+
+1. **Python 3.10+** (or whichever version you use)
+2. **pip** for installing dependencies
+3. **Docker & Docker Compose** (optional, if you want to run tests in Docker)
+4. **pytest & pytest-django** in your environment
+5. **django-ninja** and **pydantic v2** (already in `requirements.txt`)
+
+## Local Testing (Without Docker)
+
+1. **Create and Activate a Virtual Environment**  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   # or
+   venv\Scripts\activate     # On Windows
+   ```
+2. **Install Dependencies**  
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Configure pytest**  
+   - Ensure there is a `pytest.ini` in your project root, e.g.:
+     ```ini
+     [pytest]
+     DJANGO_SETTINGS_MODULE = djconfig.settings
+     python_files = tests.py test_*.py *_tests.py
+     ```
+   - Make sure `djconfig.settings` is the correct Django settings module for your project.
+4. **Run the Tests**  
+   ```bash
+   pytest
+   ```
+   This will discover and run all tests in files matching `test_*.py`, `*_tests.py`, or `tests.py`.
+
+### Example Ninja Test Code
+
+Here’s a minimal example of a test file using **Ninja’s TestClient**:
+
+```python
+# tests/test_patient_api.py
+import pytest
+from ninja.testing import TestClient
+from mainapp.api import api  # Your NinjaAPI instance
+from mainapp.models import Patient
+
+client = TestClient(api)
+
+@pytest.mark.django_db
+def test_create_patient():
+    payload = {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "age": 30,
+        "active": True
+    }
+    response = client.post("/patients/", json=payload)
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "John Doe"
+    assert data["email"] == "john@example.com"
+
+    # Confirm in the DB
+    assert Patient.objects.filter(email="john@example.com").exists()
+```
+
+## Running Tests Inside Docker
+
+If your project is containerized:
+
+1. **Build and Start Containers**  
+   ```bash
+   docker-compose build
+   docker-compose up -d
+   ```
+2. **Run Tests**  
+   Execute tests in the **web** service (or whichever service hosts your Django app):
+   ```bash
+   docker-compose exec web pytest
+   ```
+   This runs all tests using the environment inside your Docker container.
+
+## Common Issues & Troubleshooting
+
+- **`TypeError: NinjaClientBase.__init__() missing 1 required positional argument: 'router_or_app'`**  
+  Make sure you’re passing your **NinjaAPI instance** to `TestClient`. For example:
+  ```python
+  from ninja.testing import TestClient
+  from mainapp.api import api
+
+  client = TestClient(api)
+  ```
+- **Database Connection Errors**  
+  If you’re running tests locally but your `settings.py` points to a Dockerized database, you might need to adjust the `HOST` to `localhost` or run the tests inside Docker.
+- **Foreign Key Constraint Errors**  
+  Ensure you’re creating any dependent objects (e.g., `Patient`) before creating related objects (e.g., `Device`) that reference them.
+- **Migration-Related Errors**  
+  Run migrations before tests:
+  ```bash
+  python manage.py migrate
+  ```
+  or inside Docker:
+  ```bash
+  docker-compose exec web python manage.py migrate
+  ```
+
+## Additional Notes
+
+- **Django Admin Testing**  
+  You can also verify Django Admin functionality by navigating to `http://localhost:8000/admin/` (or whichever port you use). Make sure you have a superuser account:
+  ```bash
+  python manage.py createsuperuser
+  ```
+- **Coverage**  
+  For test coverage, you can install `pytest-cov`:
+  ```bash
+  pip install pytest-cov
+  ```
+  and run:
+  ```bash
+  pytest --cov=mainapp --cov-report=term-missing
+  ```
+  to see coverage details.
+
+---
 
 ## 📎 Notes
 
@@ -518,7 +1208,7 @@ pytest
  
 
 ---
-Below is an example section you can add to your README.md to verify your configuration and results:
+
 
 ---
 

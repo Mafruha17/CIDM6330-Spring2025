@@ -1,4 +1,5 @@
-from pydantic import EmailStr
+from __future__ import annotations
+from pydantic import EmailStr, Field
 from ninja import Schema
 from typing import List, Optional, TYPE_CHECKING
 
@@ -14,5 +15,11 @@ class PatientIn(Schema):
 
 class PatientOut(PatientIn):
     id: int
-    devices: Optional[List["DeviceOut"]] = []  # ✅ string reference
-    providers: Optional[List["ProviderOut"]] = []  # ✅ string reference
+    devices: Optional[List["DeviceOut"]] = Field(default_factory=list)
+    providers: Optional[List["ProviderOut"]] = Field(default_factory=list)
+
+# Runtime imports to resolve forward references
+#from .provider_schema import ProviderOut
+#from .device_schema import DeviceOut
+
+#PatientOut.model_rebuild()

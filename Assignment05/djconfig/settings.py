@@ -91,23 +91,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-"""
-If you already have Postgres installed on your host machine 
-and want Django in Docker to talk to that local DB:
-Use host.docker.internal instead of localhost. On Windows and macOS,
-Docker provides a special hostname host.docker.internal that resolves to the host.
-For example:
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_database',
-        'USER': 'postgres',
-        'PASSWORD': 'trustAlliswell',
-        'HOST': 'host.docker.internal',  # special host for Docker on Win/Mac
-        'PORT': 5432,
-    }
-}"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
