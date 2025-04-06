@@ -98,8 +98,9 @@ Below is a list of key files and their purposes. You may expand this section as 
 | [`mainapp/repositories/`](mainapp/repositories/) | Abstract and concrete repository classes                             |
 | [`mainapp/tasks.py`](mainapp/tasks.py)      | Celery tasks                                                         |
 | [`mainapp/signals.py`](mainapp/signals.py)    | Signal handlers triggering async jobs                                |
-| [`core/tests/`](core/tests/)           | Unit tests for all endpoints and services                            |
+| [`mainapp/tests/`](/mainapp/tests/)           | Unit tests for all endpoints and services                            |
 | [`djconfig/celery.py`](djconfig/celery.py)    | Celery configuration entrypoint                                      |
+| [`docker-compose.yml`](docker-compose.yml)    | Container service configuration      
 | [`docker-compose.yml`](docker-compose.yml)    | Container service configuration                                      |
 | [`requirements.txt`](requirements.txt)      | Python package dependencies                                          |
 
