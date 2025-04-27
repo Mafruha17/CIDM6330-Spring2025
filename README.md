@@ -2,7 +2,7 @@
 
 **Title:** Distributed Healthcare Communication Platform\
 **Domain:** Healthcare Device Communication and Chronic Disease Management\
-**Student:** Mafruha Chowdhury\
+**Author:** Mafruha Chowdhury\
 **University:** West Texas A&M University — Spring 2025\
 **Course:** CIDM-6330-70 Software Engineering
 
@@ -296,10 +296,12 @@ Each Gherkin BDD feature is backed by corresponding Django unittest methods in t
 
 ---
 ## 📄 License
-This project is developed as part of CIDM-6330 Software Engineering course at West Texas A&M University and is intended for academic purposes.
+This project was developed as part of the CIDM-6330 Software Engineering course at West Texas A&M University.
+The domain of Distributed Healthcare Communication was selected to demonstrate the application of software engineering principles to a real-world problem.
+This project is intended solely for academic purposes
 
-## 🙏 Acknowledgment
-Special thanks to Professor [Professor Name] for guidance, instruction, and support throughout the course.
+##  Acknowledgment
+Special thanks to Professor Dr.Babb for guidance, instruction, and support throughout the course.
 
 ## 🌟 Conclusion
 
