@@ -10,18 +10,17 @@
 
 ## 📚 Project Overview
 
-**GitHub Repository:** [CIDM6330-Spring2025  ](https://github.com/Mafruha17/CIDM6330-Spring2025)
-
 **GitHub Repository:** [CIDM6330-Spring2025 - Assignment05](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05)
 
+**GitHub Repository:** [CIDM6330-Spring2025  ](https://github.com/Mafruha17/CIDM6330-Spring2025)
 
-This project provides a scalable, secure, and distributed healthcare communication system, integrating devices, patients, and providers. Built with Django, Django Ninja, Celery, Redis, Docker, and PostgreSQL.
-
+This project delivers a scalable, distributed healthcare communication system designed to improve patient engagement, provider efficiency, and device interoperability. Built with Django, Ninja APIs, Celery, Redis, and Docker, the platform supports real-time data integration, two-way communication, and secure data management — demonstrating a professional-grade architecture ready for industry-scale enhancement.
 
 ## 📋 Table of Contents
 
 - [📚 Project Overview](#-project-overview)
-- [🔄 Evolutions Alignment Summary](#-evolutions-alignment-summary)
+- [📖 Design Evolution and Real-World Projection Overview](#-design-evolution-and-real-world-projection-overview)
+- [🔄 Evolution Contributions and Repository Links](#-evolution-contributions-and-repository-links)
 - [🧠 Final Project Alignment Overview](#-final-project-alignment-overview)
 - [📖 Evolution 0: Domain Specification and UML Modeling](#-evolution-0-domain-specification-and-uml-modeling)
 - [📖 Evolution 1: Requirements Specification Summary](#-evolution-1-requirements-specification-summary)
@@ -35,6 +34,9 @@ This project provides a scalable, secure, and distributed healthcare communicati
 - [🔢 TDD Mapping: Unit Tests Correspondence](#-tdd-mapping-unit-tests-correspondence)
 - [🛠️ Running the System](#-running-the-system)
 - [📝 Notes](#-notes)
+- [⚠️ Scope Disclaimer](#️-scope-disclaimer)
+- [📄 License](#-license)
+- [Acknowledgment](#acknowledgment)
 - [🌟 Conclusion](#-conclusion)
 
 ---
@@ -319,6 +321,13 @@ Each Gherkin BDD feature is backed by corresponding Django unittest methods in t
 - Docker environment ensures portability and consistency.
 
 ---
+---
+## ⚠️ Scope Disclaimer
+
+This system has been developed as an academic proof-of-concept for coursework purposes. It has not yet been tested or deployed in a real-world production healthcare environment.
+
+---
+
 ## 📄 License
 This project was developed as part of the CIDM-6330 Software Engineering course at West Texas A&M University.
 The domain of Distributed Healthcare Communication was selected to demonstrate the application of software engineering principles to a real-world problem.
@@ -332,6 +341,8 @@ Special thanks to Professor Dr.Babb for guidance, instruction, and support throu
 This project demonstrates a full-stack, real-world backend system using Django, Ninja, Celery, Docker, and PostgreSQL. It integrates all software engineering principles covered across Evolutions 0–5, meeting and exceeding final project expectations.
 
 Ready for professional deployment or expansion.
+> Empowering healthcare innovation through distributed systems and scalable engineering.
+
 
 ---
 
