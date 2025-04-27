@@ -12,8 +12,8 @@
 
 **Repository Link:** [CIDM6330-Spring2025/Assignment05](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05)
 
-- [ERD Diagram](/docs/edr.PNG)
-- [Class Diagram](/docs/Class%20Diagram.png)
+- [ERD Diagram](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/docs/edr.PNG)
+- [Class Diagram](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/docs/Class%20Diagram.png/edr.PNG)
 
 ---
 
