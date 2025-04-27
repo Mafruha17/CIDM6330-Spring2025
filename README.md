@@ -66,7 +66,7 @@ The following table summarizes the contributions made at each evolution stage, t
 | Evolution 0 | Domain selection and UML modeling                 | Completed & updated                        | [Evolution 0 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment0) |
 | Evolution 1 | Requirements Specification with Gherkin Scenarios | Completed & enhanced                       | [Evolution 1 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment%201) |
 | Evolution 2 | API Development (FastAPI)                         | Completed and transitioned to Django Ninja | [Evolution 2 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment%202) |
-| Evolution 3 | Repository Pattern (FastAPI)                      | Completed (not reimplemented post-Django)  | [Evolution 3 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3) |
+| Evolution 3 | Repository Pattern (FastAPI)                      | Completed                                  | [Evolution 3 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3) |
 | Evolution 4 | Migration to Django (DRF initially)               | Completed with Ninja upgrade               | [Evolution 4 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04) |
 | Evolution 5 | Full Django Ninja, Docker, Celery, Redis, Testing | Fully implemented                          | [Evolution 5 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05) |
 
