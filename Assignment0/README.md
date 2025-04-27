@@ -9,6 +9,19 @@
     Assignment 0: Domain Selection, the Unified Modeling Language, and an Introduction
 
  # Healthcare Device Communication #
+ ## 📋 Table of Contents
+
+- [Introduction](#introduction)
+- [Problem and Domain](#problem-and-domain)
+- [Personal/Professional Interest](#personalprofessional-interest)
+- [Prototype System](#prototype-system)
+- [Goals](#goals)
+- [Stakeholders](#stakeholders)
+- [📊 UML Diagrams](#-uml-diagrams)
+  - [Structural Diagrams](#structural-diagrams)
+  - [Behavioral Diagrams](#behavioral-diagrams)
+- [Final Summary](#final-summary)
+
 
 ## Introduction ##
 
@@ -59,8 +72,8 @@ By incorporating these features, the platform ensures adaptability to future cha
 *	Primary: Primary: Patients and healthcare providers, who benefit from improved data transparency and communication.
 *	Secondary: Device manufacturers, healthcare organizations, and policymakers aiming to enhance chronic disease management and promote interoperability standards.
 
-## 3. UML Diagrams
-### 3.1 Structural Diagrams
+## UML Diagrams
+### Structural Diagrams
   - **Class Diagram**
     - ![Class Diagram](./UML_Diagrams/Class%20Diagram.png)
   - **Component Diagram large**
@@ -78,8 +91,8 @@ By incorporating these features, the platform ensures adaptability to future cha
 
    - **Package Diagram 3**
      - ![Package Diagram C](./UML_Diagrams/Feature_Package_C_Distributed_Data_Management.png)
-
-### 3.2 Behavioral Diagrams
+ ---
+### Behavioral Diagrams
   - **Use Case Diagram**
     - ![Use Case Diagram](./UML_Diagrams/Usecase%20diagram.png)
   - **Sequence Diagram**
@@ -91,6 +104,9 @@ By incorporating these features, the platform ensures adaptability to future cha
   - **Interaction Overview Diagram**
     - ![Interaction Overview Diagram](./UML_Diagrams/Interaction%20Overview%20Diagram.png)
 
--------------------------------------------------------------------------------------------------------------
+---
+## Final Summary
 
 This system would act as a bridge between technology and healthcare, addressing critical gaps in communication, process flow, and data integration. By incorporating distributed architecture and secure device-to-device communication, the platform ensures robust, real-time data management and interaction. These features enhance resilience, scalability, and availability, ultimately leading to better chronic disease management outcomes while fostering innovation in healthcare technology.
+
+---
