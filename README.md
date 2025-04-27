@@ -10,7 +10,9 @@
 
 ## 📚 Project Overview
 
-**GitHub Repository:** [CIDM6330-Spring2025 - Assignment05](https://github.com/Mafruha17/CIDM6330-Spring2025)
+**GitHub Repository:** [CIDM6330-Spring2025  ](https://github.com/Mafruha17/CIDM6330-Spring2025)
+
+**GitHub Repository:** [CIDM6330-Spring2025 - Assignment05](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05)
 
 
 This project provides a scalable, secure, and distributed healthcare communication system, integrating devices, patients, and providers. Built with Django, Django Ninja, Celery, Redis, Docker, and PostgreSQL.
