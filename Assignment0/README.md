@@ -7,13 +7,13 @@
     Student : Mafruha Chowdhury
  
     Assignment 0: Domain Selection, the Unified Modeling Language, and an Introduction
-
+  ---
  # Healthcare Device Communication #
  ## 📋 Table of Contents
 
 - [Introduction](#introduction)
 - [Problem and Domain](#problem-and-domain)
-- [Personal/Professional Interest](#personalprofessional-interest)
+- [Personal| Professional Interest](#personalprofessional-interest)
 - [Prototype System](#prototype-system)
 - [Goals](#goals)
 - [Stakeholders](#stakeholders)
