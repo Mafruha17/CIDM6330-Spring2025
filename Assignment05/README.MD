@@ -17,23 +17,24 @@
 
 ---
 
-## 📑 Table of Contents
+## 📋 Table of Contents
 
-1. [Overview & Objectives](#overview--objectives)
-2. [Tech Stack](#tech-stack)
-3. [Architecture & Patterns](#architecture--patterns)
-4. [Installation & Setup](#installation--setup)
-5. [Docker, Redis, Celery](#docker-redis-celery)
-6. [API Design](#api-design)
-7. [API Endpoints (Ninja Routers)](#api-endpoints-ninja-routers)
-8. [Event-Driven Processing](#event-driven-processing)
-9. [Testing](#testing)
-10. [Admin Panel Usage](#admin-panel-usage)
-11. [Troubleshooting](#troubleshooting)
-12. [Verification](#verification)
-13. [Code Files](#code-files)
-14. [References](#references)
-15. [Conclusion](#conclusion)
+1. [Overview & Objectives](#-overview--objectives)
+2. [Tech Stack](#-tech-stack)
+3. [Architecture & Patterns](#-architecture--patterns)
+4. [Installation & Setup](#-installation--setup)
+5. [Docker, Redis, Celery](#-docker-redis-celery)
+6. [API Design](#-api-design)
+7. [API Endpoints (Ninja Routers)](#-api-endpoints-ninja-routers)
+8. [Event-Driven Processing](#-event-driven-processing)
+9. [Testing](#-testing)
+10. [Behavior-Driven Development (BDD) with Gherkin](#-behavior-driven-development-bdd-with-gherkin)
+11. [Admin Panel Usage](#-admin-panel-usage)
+12. [Troubleshooting](#-troubleshooting)
+13. [Verification](#-verification)
+14. [References](#-references)
+15. [Conclusion](#-conclusion)
+16. [Additional Code Files](#-additional-code-files)
 
 ---
 
@@ -277,6 +278,23 @@ def notify_new_patient_created(name):
 
 ## 🧪 Testing
 
+---
+
+## 🧪 Behavior-Driven Development (BDD) with Gherkin
+
+In addition to unit testing with `pytest` and Django's `unittest`, key system behaviors were modeled using Behavior-Driven Development (BDD) practices.  
+Gherkin syntax was used to define expected user interactions with the system, ensuring that API behaviors align with business requirements.
+
+### 📋 Sample Gherkin Scenario — Patient Creation
+```gherkin
+Feature: Patient Management
+
+Scenario: Successfully Create a New Patient
+  Given the user provides valid patient information
+  When the user submits a create patient request
+  Then the system should store the patient and return a success response
+
+
 ### Setup
 ```bash
 pip install pytest pytest-django
@@ -326,6 +344,8 @@ Visit: `http://localhost:8000/admin/`
 - Unassigning does **not delete** entities
 
 ---
+
+
 
 ## 🛠️ Troubleshooting
 
