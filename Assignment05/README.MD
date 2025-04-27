@@ -94,16 +94,16 @@ Below is a list of key files and their purposes. You may expand this section as 
 
 | File / Directory        | Purpose                                                              |
 | ----------------------- | -------------------------------------------------------------------- |
-| [`mainapp/models.py`](/mainapp/models.py)     | Django ORM models: Patient, Device, Provider, PatientProvider        |
-| [`mainapp/api/`](mainapp/api/)          | API logic using Django Ninja (patient\_api.py, device\_api.py, etc.) |
-| [`mainapp/repositories/`](mainapp/repositories/) | Abstract and concrete repository classes                             |
-| [`mainapp/tasks.py`](mainapp/tasks.py)      | Celery tasks                                                         |
-| [`mainapp/signals.py`](mainapp/signals.py)    | Signal handlers triggering async jobs                                |
-| [`mainapp/tests/`](/mainapp/tests/)           | Unit tests for all endpoints and services                            |
-| [`djconfig/celery.py`](djconfig/celery.py)    | Celery configuration entrypoint                                      |
-| [`docker-compose.yml`](docker-compose.yml)    | Container service configuration      
-| [`docker-compose.yml`](docker-compose.yml)    | Container service configuration                                      |
-| [`requirements.txt`](requirements.txt)      | Python package dependencies                                          |
+| [`mainapp/models.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/models.py)     | Django ORM models: Patient, Device, Provider, PatientProvider        |
+| [`mainapp/api/`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/api)          | API logic using Django Ninja (patient\_api.py, device\_api.py, etc.) |
+| [`mainapp/repositories/`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/repositories/) | Abstract and concrete repository classes                             |
+| [`mainapp/tasks.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/tasks.py)      | Celery tasks                                                         |
+| [`mainapp/signals.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/signals.py)    | Signal handlers triggering async jobs                                |
+| [`mainapp/tests/`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/tests/)           | Unit tests for all endpoints and services                            |
+| [`djconfig/celery.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/djconfig/celery.py)    | Celery configuration entrypoint                                      |
+| [`docker-compose.yml`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/docker-compose.yml)    | Container service configuration      
+| [`docker-compose.yml`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/docker-compose.yml)    | Container service configuration                                      |
+| [`requirements.txt`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/requirements.txt)      | Python package dependencies                                          |
 
 ---
 
@@ -415,7 +415,7 @@ Assignment05/
 │   ├── [tasks.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/tasks.py) — *Celery tasks*  
 │   ├── [signals.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/signals.py) — *Django signals*  
 │   ├── [repositories/](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05/mainapp/repositories)  
-│   │   ├── [base.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/repositories/base.py) — *AbstractRepository*  
+│   │   ├── [base.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/repositories/base_repository.py) — *AbstractRepository*  
 │   │   ├── [patient_repository.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/repositories/patient_repository.py)  
 │   │   ├── [provider_repository.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/repositories/provider_repository.py)  
 │   │   └── [device_repository.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/mainapp/repositories/device_repository.py)  
@@ -437,7 +437,7 @@ Assignment05/
 │  
 ├── [docker-compose.yml](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/docker-compose.yml) — *Container configuration*  
 ├── [requirements.txt](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/requirements.txt) — *Dependencies*  
-├── [README.md](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/README.md) — *Project documentation*  
+├── [README.md](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/README.MD) — *Project documentation*  
 └── [manage.py](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment05/manage.py) — *Django management script*  
 
 
