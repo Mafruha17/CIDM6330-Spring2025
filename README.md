@@ -1,4 +1,4 @@
-# Final Project Submission README
+# Final Project Submission 
 
 **Title:** Distributed Healthcare Communication Platform\
 **Domain:** Healthcare Device Communication and Chronic Disease Management\
