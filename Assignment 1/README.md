@@ -23,12 +23,12 @@ Effective communication among patients, providers, and healthcare organizations 
    - [Interfaces (Controls)](#23-interfaces-controls)
    - [Behaviors (Including UML Diagrams)](#24-behaviors)
 3. [**UML Diagrams**](#3-uml-diagrams)
-   - [Structural Diagrams](#31-structural-diagrams)
+   - [Structural Diagrams](#31-structural-diagrams) | Containing the following diagrams
      - [Class Diagram](#class-diagram)
      - [Component Diagram](#component-diagram)
      - [Deployment Diagram](#deployment-diagram)
      - [Package Diagram](#package-diagram)
-   - [Behavioral Diagrams](#32-behavioral-diagrams)
+   - [Behavioral Diagrams](#32-behavioral-diagrams) |Containing the following diagrams
      - [Use Case Diagram](#use-case-diagram)
      - [Sequence Diagram](#sequence-diagram)
      - [State Diagram](#state-diagram)
