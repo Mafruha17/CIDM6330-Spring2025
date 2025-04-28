@@ -11,15 +11,18 @@ The test suite includes:
 ---
 
 ## **Table of Contents**
-1. [SQL Repository Tests](#sql-repository-tests)
-2. [CSV Repository Tests](#csv-repository-tests)
-3. [In-Memory Repository Tests](#in-memory-repository-tests)
-4. [Test Configuration](#test-configuration)
+1. [SQL Repository Tests](#1-sql-repository-tests)
+2. [CSV Repository Tests](#2-csv-repository-tests)
+3. [In-Memory Repository Tests](#3-in-memory-repository-tests)
+4. [Test Configuration](#4-test-configuration)
 
 ---
 
 ## **1. SQL Repository Tests**
-For detailed test cases, refer to the [SQL Repository Tests](tests/test_sql_repository.md).
+For detailed test cases, refer to the [SQL Repository Tests](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/tests/test_sql_repository.py/).
+ 
+ - And [Tests](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/tests).
+ 
 
 ### **Purpose**
 - Ensures that the **SQLModel-based repository** correctly handles **CRUD operations**.
@@ -29,7 +32,7 @@ For detailed test cases, refer to the [SQL Repository Tests](tests/test_sql_repo
 ---
 
 ## **2. CSV Repository Tests**
-For detailed test cases, refer to the [CSV Repository Tests](tests/test_csv_repository.md).
+For detailed test cases, refer to the [CSV Repository Tests](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/tests/test_csv_repository.py).
 
 ### **Purpose**
 - Ensures that **CSV-based storage** correctly supports **CRUD operations**.
@@ -39,7 +42,7 @@ For detailed test cases, refer to the [CSV Repository Tests](tests/test_csv_repo
 ---
 
 ## **3. In-Memory Repository Tests**
-For detailed test cases, refer to the [In-Memory Repository Tests](tests/test_in_memory_repository.md).
+For detailed test cases, refer to the [In-Memory Repository Tests](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/tests/test_in_memory_repository.py).
 
 ### **Purpose**
 - Ensures that the **in-memory repository** correctly implements **CRUD operations**.
@@ -49,7 +52,7 @@ For detailed test cases, refer to the [In-Memory Repository Tests](tests/test_in
 ---
 
 ## **4. Test Configuration**
-For detailed setup and fixtures, refer to the [Test Configuration](tests/conftest.md).
+For detailed setup and fixtures, refer to the [Test Configuration](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/tests/conftest.py).
 
 ### **Purpose**
 - **Defines test fixtures** for **database initialization**.
