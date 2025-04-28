@@ -10,8 +10,8 @@
 
 **Git repo link:** [CIDM6330-Spring2025/Assignment04](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04)
 
-- [ERD for assignment04](/docs/edr.PNG)
-- [Class Diagram](/docs/Class%20Diagram.png)
+- [ERD for assignment04](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment04/docs/edr.PNG)
+- [Class Diagram](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment04/docs/Class%20Diagram.png)
 - [Code Files & Explanation](#code-files--explanation)
 
 ---
@@ -23,11 +23,10 @@
 - [Objectives](#objectives)
 - [Project Folder Directory](#project-folder-directory)
 - [Installation & Setup](#installation--setup)
-- [Code Files & Explanation](#code-files--explanation) | (`to view the code,click the link (code files)`)
-- [API Endpoints](#api-endpoints)
+- [Code Files & Explanation](#code-files--explanation)
+- [API Endpoints](#-api-endpoints-sample)
 - [Using the Django Admin](#using-the-django-admin)
-- [Testing](#testing)
-- [Future Improvements](#future-improvements)
+- [Testing](#-testing)
 - [Conclusion](#conclusion)
 
 ---
@@ -210,35 +209,36 @@ Use Simple JWT endpoints (`/api/token/` and `/api/token/refresh/`) for authentic
 ---
 ## **Code Files & Explanation**
 
-1. **[`models.py`](/mainapp/models.py)**  : Defines data models.
+1. **[`models.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment04/mainapp/models.py)**  : Defines data models.
    - Defines **Patient**, **Provider**, **Device**, and **PatientProvider** models.  
    - **PatientProvider** is a join model for many-to-many (patients ↔ providers).  
    - **Device** uses a `ForeignKey` to `Patient`, representing one-to-many.
 
-2. **[`serializers.py`](mainapp/serializers.py)**  :Input/output validation.
+2. **[`serializers.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/serializers.py)**  :Input/output validation.
    - Houses this project **DRF serializers** (e.g., `PatientSerializer`, `ProviderSerializer`, `DeviceSerializer`).  
    - These manage input/output validation and handle nested relationships if needed.
 
-3. **[`repositories/`](mainapp/repositories)** : Data abstraction.
+3. **[`repositories/`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/repositories)** : Data abstraction.
    - **`base_repository.py`**: Abstract base class using `abc` for CRUD methods.  
    - **`patient_repository.py`, `provider_repository.py`, `device_repository.py`**: Concrete repository classes that inherit from `BaseRepository`.
 
-4. **[`views/`](mainapp/views)**: API endpoints.
+4. **[`views/`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/views)**: API endpoints.
    - **`patient_views.py`, `device_views.py`, `provider_views.py`**: Defined Django REST Framework ViewSets (either `ModelViewSet` or `ViewSet`) for CRUD and custom assignment actions.
 
-5. **[`admin.py`](mainapp/admin.py)**  Django Admin configurations.
+5. **[`admin.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/admin.py)**  Django Admin configurations.
 
    - Registers models in the Django admin site.  
    - Adds **inlines** for `PatientProvider` (to manage providers for patients) and `Device` (to manage devices assigned to a patient).
 
-6. **[`urls.py`](djconfig/urls.py)**  
+6. **[`urls.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment04/djconfig/urls.py)**  
    - Root URL configuration, includes `mainapp.urls` under `/api/`.  
 
-7. **[`urls.py`](mainapp/urls.py)**  
+7. **[`urls.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment04/mainapp/urls.py)**  
    - Uses `DefaultRouter()` to register routes for `PatientViewSet`, `ProviderViewSet`, and `DeviceViewSet`.  
 
-8. **`Test`**  
-   - **[`tests`](test_patient.py)**, **[`test_device.py`](test_device.py)**, **[`test_provider.py`](test_provider.py)**: Pytest test files verifying CRUD, assignment endpoints, and repository logic.
+8. **[`Test`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/tests)**  
+
+   - **[`tests_patient.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/tests/test_patient.py)**, **[`test_device.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/tests/test_device.py)**, **[`test_provider.py`](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment04/mainapp/tests/test_provider.py)**: Pytest test files verifying CRUD, assignment endpoints, and repository logic.
 
 ---
 
