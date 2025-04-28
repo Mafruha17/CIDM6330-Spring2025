@@ -25,10 +25,10 @@ Git repo link
 ---
 [https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3)
 
-[EDR for assignment03 ](/docs/edr.PNG)
+[EDR for assignment03 ](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/edr.PNG)
 
 
-[EDR](/docs/Class%20Diagram.png)
+[EDR CLass Diagram](https://github.com/Mafruha17/CIDM6330-Spring2025/blob/main/Assignment3/docs/Class%20Diagram.png)
 
 ---
 
@@ -227,10 +227,10 @@ CRUD operations are implemented within separate repository classes, allowing a s
 ---
 
 ### **Table of Contents**
-1. [Patient CRUD Operations](#patient-crud-operations)
-2. [Provider CRUD Operations](#provider-crud-operations)
-3. [Device CRUD Operations](#device-crud-operations)
-4. [Common Features Across CRUD Methods](#common-features-across-crud-methods)
+1. [Patient CRUD Operations](#1-patient-crud-operations-databasecrudpatient_crudpy)
+2. [Provider CRUD Operations](#2-provider-crud-operations-databasecrudprovider_crudpy)
+3. [Device CRUD Operations](#3-device-crud-operations-databasecruddevice_crudpy)
+4. [Common Features Across CRUD Methods](#4-common-features-across-crud-methods)
 5. [Conclusion](#conclusion)
 
 ---
@@ -486,11 +486,11 @@ def test_app():
 ## **Code Files & Documentation**
 For more detailed information on the implementation of each module, refer to the following markdown files:
 
-- [Schema Documentation](docs/schemas.md)
-- [Database & CRUD Operations](docs/database_CRUD_Operation.md)
-- [Repository Documentation ](docs/repository_pattern_Implementation.md)
-- [Router Documentation](docs/routers.md)
-- [Testing doc](docs/test_documentation.md)
+- [Schema Documentation](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/schemas.md)
+- [Database & CRUD Operations](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/database_CRUD_Operation.md)
+- [Repository Documentation ](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/repository_pattern_Implementation.md)
+- [Router Documentation](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/routers.md)
+- [Testing doc](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment3/docs/test_documentation.md)
 
 ---
 
