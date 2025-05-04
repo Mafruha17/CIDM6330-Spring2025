@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
 from mainapp.api import api  # ✅  Ninja API instance
+from ai_services.api_ai import router as ai_router
+api.add_router("/ai/", ai_router),     # Now calls live at /api/ai/
 
 # ✅ Simple root welcome message
 def index(request):
