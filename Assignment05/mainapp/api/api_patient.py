@@ -10,7 +10,8 @@ router = Router()
 
 @router.get("/", response=List[PatientOut])
 def list_patients(request):
-    return Patient.objects.prefetch_related("devices", "providers").all()
+    patients = Patient.objects.prefetch_related("devices", "providers").all()
+    return patients
 
 @router.get("/{patient_id}", response=PatientOut)
 def get_patient(request, patient_id: int):

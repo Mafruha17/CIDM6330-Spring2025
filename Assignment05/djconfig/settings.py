@@ -25,11 +25,10 @@ env = environ.Env(
     DEBUG=(bool, False),
     POSTGRES_USER=(str, "postgres"),
     POSTGRES_PASSWORD=(str, ""),
-    OPENAI_API_KEY=(str, ""),
-    OPENAI_MODEL=(str, "gpt-4o-mini"),  # ← note the comma here
-)  # ← this closes the Env( … ) call
-
-
+    POSTGRES_DB=(str, "my_database"),         # Optional, if not already defined
+    DB_HOST=(str, "localhost"),               # ← ADD THIS
+    DB_PORT=(str, "5432"),                    # ← ADD THIS
+)
 
 # 2) load the .env file into os.environ
 env_file = BASE_DIR / ".env"
@@ -72,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp',
     'ai_services',
+     'dashboard',  # ✅ this must be here
 ]
 
 MIDDLEWARE = [
@@ -109,35 +109,23 @@ TEMPLATES = [
 
 DATABASES = {
    "default": {
-       "ENGINE":   "django.db.backends.postgresql",
-       "NAME":     env("POSTGRES_DB", default="my_database"),
-      "USER":     env("POSTGRES_USER"),
-      "PASSWORD": env("POSTGRES_PASSWORD"),
-      "HOST":     "db",
-      "PORT":     "5432",
+       "ENGINE": "django.db.backends.postgresql",
+       "NAME": env("POSTGRES_DB", default="my_database"),
+       "USER": env("POSTGRES_USER"),
+       "PASSWORD": env("POSTGRES_PASSWORD"), #"HOST": env("DB_HOST", default="localhost"),
+       "HOST": "postgres_db",  # ← comment moved outside the string
+       "PORT": env("DB_PORT", default="5432"),
     }
 }
-# Now pull those values into Django settings:
-OPENAI_API_KEY = env("OPENAI_API_KEY")    # e.g. sk-...
-OPENAI_MODEL   = env("OPENAI_MODEL")      # e.g. "gpt-4o-mini"
+
+env = environ.Env()
+environ.Env.read_env()
+GEMINI_API_KEY = env("GEMINI_API_KEY")
+
 
 WSGI_APPLICATION = 'djconfig.wsgi.application'
 
 
-""" 
-DATABASES = {
-
-
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_database',  # Change this to your actual database name
-        'USER': 'postgres',  
-        'PASSWORD': 'trustAlliswell',  # Replace with your actual password
-        'HOST': 'db',            #'localhost' This one is changed for container
-        'PORT': '5432',
-    }
-}
-"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
