@@ -16,6 +16,10 @@
 
 This project delivers a scalable, distributed healthcare communication system designed to improve patient engagement, provider efficiency, and device interoperability. Built with Django, Ninja APIs, Celery, Redis, and Docker, the platform supports real-time data integration, two-way communication, and secure data management — demonstrating a professional-grade architecture ready for industry-scale enhancement.
 
+📦 Note: All project evolutions (Assignment0 through Assignment05) have been consolidated into the FinalProjectDropbox/ folder. For submission purposes, this folder has also been packaged as a zip file named FinalProjectSubmission.zip, available in the root of the repository.
+
+
+
 ## 📋 Table of Contents
 
 - [📚 Project Overview](#-project-overview)
@@ -42,6 +46,8 @@ This project delivers a scalable, distributed healthcare communication system de
 ---
 
 ## 🔄 Evolutions Alignment Summary
+
+🧪 Development Summary: Throughout the development of each evolution phase, functional and scope-specific testing was consistently conducted to validate system behavior. Communication across components and crosscutting concerns were incrementally verified. While some conceptual implementations, such as the AI service API, have been integrated, their full testing and expansion are deferred to future phases due to scope limitations. Overall, the project demonstrates steady and effective progress through discovery, refinement, and iterative learning, satisfying the intended outcomes for each designated evolution stage.
 
 ## 🧠 Final Project Alignment Overview
 
