@@ -56,6 +56,8 @@ This final project integrates all required evolutions, progressively evolving fr
 
 This structure fully aligns with the final project goals, delivering a modular, tested, scalable, and professional-grade backend system.
 
+📦 Note: All project evolutions (Assignment0 through Assignment05) have been consolidated into the FinalProjectDropbox/ folder. For submission purposes, this folder has also been packaged as a zip file named FinalProjectSubmission.zip, available in the root of the repository.
+
 ---
 ## 🔄 Evolution Contributions and Repository Links
 
@@ -71,6 +73,7 @@ The following table summarizes the contributions made at each evolution stage, t
 | Evolution 5 | Full Django Ninja, Docker, Celery, Redis, Testing | Fully implemented                          | [Evolution 5 Repo](https://github.com/Mafruha17/CIDM6330-Spring2025/tree/main/Assignment05) |
 
 ---
+🧪 Development Summary: Throughout the development of each evolution phase, functional and scope-specific testing was consistently conducted to validate system behavior. Communication across components and crosscutting concerns were incrementally verified. While some conceptual implementations, such as the AI service API, have been integrated, their full testing and expansion are deferred to future phases due to scope limitations. Overall, the project demonstrates steady and effective progress through discovery, refinement, and iterative learning, satisfying the intended outcomes for each designated evolution stage.
 
 ## 📖 Evolution 0: Domain Specification and UML Modeling
 - ✅ Completed and Done
